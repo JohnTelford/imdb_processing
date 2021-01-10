@@ -1,0 +1,1 @@
+xsv select nconst,primaryName,primaryProfession /Volumes/Dev/imdb/imdb_dataset_files/fxl_name.basics.csv     | xsv search --select 2 '^*$'     | xsv search --select 3 '^act.*$'     | xsv select 1,2,3     | xsv slice  --no-headers --start 1

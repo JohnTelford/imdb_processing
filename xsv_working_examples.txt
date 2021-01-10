@@ -1,0 +1,60 @@
+Working examples
+==============
+
+xsv select genres fxl_title.basics.csv | xsv table
+
+xsv count  fxl_title.basics.csv
+
+xsv count  title.basics.csv
+
+xsv select genres fxl_title.basics.csv | xsv genres
+
+xsv frequency  --no-nulls --select genres --limit 29 fxl_title.basics.csv 
+
+xsv frequency  --select genres fxl_title.basics.csv 
+
+xsv frequency  --select startYear --limit 50 fxl_title.basics.csv | xsv sort --select value --reverse
+
+xsv sort --select count --numeric --reverse frequency_title.basics.csv 
+
+xsv select 1-8 fxl_title.akas.csv| xsv slice -e 100
+
+xsv frequency --select genres fxl_title.basics.csv
+10.13s user 0.25s system 334% cpu 3.098 total
+
+xsv frequency --select genres noindex_fxl_title.basics.csv
+15.41s user 0.20s system 99% cpu 15.635 total
+
+# basics_principles
+#   large output file
+xsv join nconst fxl_name.basics.csv nconst fxl_title.principals.csv | xsv table > basics_principles.csv
+
+## search with regex
+# xsv search 'John Wayne' --select primaryName fxl_name.basics.csv 
+
+#xsv join nconst  fxl_name.basics.csv tconst primaryTitle fxl_title.basics.csv 
+
+#xsv join --output name_title.csv nconst fxl_name.basics.csv nconst  fxl_title.principals.csv
+
+xsv join --output name_title.csv nconst search 'John Wayne' --select primaryName fxl_name.basics.csv nconst  fxl_title.principals.csv
+
+xsv select 1-4,6,9 fxl_title.basics.csv | xsv search 'movie' | xsv sample 10 | xsv table
+
+xsv select 1-3,6 fxl_title.basics.csv | xsv sort startYear | xsv sample 10 | xsv table
+
+xsv select 1-3,6 fxl_title.basics.csv | xsv search --select startYear '2\d+'| xsv sort --select startYear --numeric  | xsv sample 50 | xsv table
+
+xsv select 1-3,6 fxl_title.basics.csv | xsv search --select startYear '2\d+'| xsv sort --select startYear --numeric  | xsv sample 50 | xsv table
+
+xsv select 1-3,6 fxl_title.basics.csv | xsv search --select 4 '2\d+'| xsv sort --select 4 --numeric --reverse | xsv sample 50 | xsv table
+
+xsv select 1-3,6 fxl_title.basics.csv | xsv search --select 4 '2\d+' |  xsv sample 50 | xsv table
+
+# 2000+ Works
+xsv select 1-3,6 fxl_title.basics.csv | xsv search --select 4 '^2\d+'  > years_2000.csv
+
+
+rg --regexp '2\d+' fxl_title.basics.csv |  xsv select 1-3,6  | sort -n -t ',' +4
+
+# Actor works
+xsv select 1,2,5  fxl_name.basics.csv | xsv search --select 3 'act.*'| less

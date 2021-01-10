@@ -1,0 +1,78 @@
+Sat Dec 26 14:39:27 PST 2020
+
+Dataset Files
+------------------
+/Volumes/Dev/imdb/imdb_dataset_files/
+
+fxl_name.basics.csv
+fxl_name.basics.csv.idx
+fxl_title.akas.csv
+fxl_title.akas.csv.idx
+fxl_title.basics.csv
+fxl_title.basics.csv.idx
+fxl_title.episode.csv
+fxl_title.episode.csv.idx
+fxl_title.principals.csv
+fxl_title.principals.csv.idx
+fxl_title.ratings.csv
+fxl_title.ratings.csv.idx
+hdrs_name.basics.csv
+hdrs_title.akas.csv
+hdrs_title.basics.csv
+hdrs_title.episode.csv
+hdrs_title.principals.csv
+hdrs_title.ratings.csv
+name.basics.csv
+title.akas.csv
+title.basics.csv
+title.episode.csv
+title.principals.csv
+title.ratings.csv
+
+hdrs_name.basics.csv
+1   nconst
+2   primaryName
+3   birthYear
+4   deathYear
+5   primaryProfession
+6   knownForTitles
+
+hdrs_title.akas.csv
+1   titleId
+2   ordering
+3   title
+4   region
+5   language
+6   types
+7   attributes
+8   isOriginalTitle
+
+hdrs_title.basics.csv
+1   tconst
+2   titleType
+3   primaryTitle
+4   originalTitle
+5   isAdult
+6   startYear
+7   endYear
+8   runtimeMinutes
+9   genres
+
+hdrs_title.episode.csv
+1   tconst
+2   parentTconst
+3   seasonNumber
+4   episodeNumber
+
+hdrs_title.principals.csv
+1   tconst
+2   ordering
+3   nconst
+4   category
+5   job
+6   characters
+
+hdrs_title.ratings.csv
+1   tconst
+2   averageRating
+3   numVotes

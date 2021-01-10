@@ -1,0 +1,1 @@
+xsv select tconst,ordering,nconst,category,job,characters /Volumes/Dev/imdb/imdb_dataset_files/fxl_title.principals.csv      | xsv search --select 3 '^*nm0000078$'      | xsv slice  --no-headers --start 1 
