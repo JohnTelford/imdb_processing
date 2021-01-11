@@ -26,6 +26,7 @@ imdb_dataset_out="$imdb_dataset_out_files$fxl_name"
 source functions/actor_nconst
 
 actor_nconst  "John Wayne"
+
 # actor_tcosnt "nm0000078"
 # actor_title "tt0075213"
 
