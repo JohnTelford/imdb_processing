@@ -23,11 +23,13 @@ imdb_dataset_out_files="/Volumes/Dev/imdb/imdb_processing_out/"
 imdb_dataset_in="$imdb_dataset_in_files$fxl_name"
 imdb_dataset_out="$imdb_dataset_out_files$fxl_name"
 
-source functions/actor_nconst
+# functions
+source functions/name_basics_nconst
+source functions/title_principales_tconst
+source functions/title_basics_primaryTitle
 
-actor_nconst  "John Wayne"
-
-# actor_tcosnt "nm0000078"
-# actor_title "tt0075213"
+#name_basics_nconst  "John Wayne" actor
+#title_principales_tconst "nm0000078"
+title_basics_primaryTitle "tt0075213"
 
 exit
