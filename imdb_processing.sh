@@ -16,14 +16,16 @@
 #echo "DEBUG_control"
 #control
 
+imdb_dataset_attributes="/Volumes/Dev/imdb/imdb_dataset_attributes"
 imdb_dataset_in_files="/Volumes/Dev/imdb/imdb_dataset_files/"
 imdb_dataset_out_files="/Volumes/Dev/imdb/imdb_processing_out/"
+
 imdb_dataset_in="$imdb_dataset_in_files$fxl_name"
 imdb_dataset_out="$imdb_dataset_out_files$fxl_name"
 
 source functions/actor_nconst
 
-actor_nconst  "Robert Downey"
+actor_nconst  "John Wayne"
 # actor_tcosnt "nm0000078"
 # actor_title "tt0075213"
 
