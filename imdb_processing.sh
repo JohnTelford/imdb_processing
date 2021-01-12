@@ -24,12 +24,12 @@ imdb_dataset_in="$imdb_dataset_in_files$fxl_name"
 imdb_dataset_out="$imdb_dataset_out_files$fxl_name"
 
 # functions
-source functions/name_basics_nconst
-source functions/title_principales_tconst
-source functions/title_basics_primaryTitle
+source functions/name_basics_nconst.sh
+source functions/title_principales_tconst.sh
+source functions/title_basics_primary_title.sh
 
-#name_basics_nconst  "John Wayne" actor
-#title_principales_tconst "nm0000078"
-title_basics_primaryTitle "tt0075213"
+name_basics_nconst.sh  "Robert Downey" actor
+#title_principales_tconst.sh "nm0000078"
+#title_basics_primary_title.sh "tt0075213"
 
 exit

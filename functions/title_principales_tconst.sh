@@ -1,10 +1,8 @@
-
-#!/bin/bash
 # imdb_processing
 
-function title_principales_tconst( )
+function title_principales_tconst.sh( )
 {
-    echo "title_principales_tconst"
+    echo "title_principales_tconst.sh"
 #     # tconst "<nconst>"
 #     # output xsv_tconst_actor
 #     # returns tconst
@@ -25,7 +23,7 @@ function title_principales_tconst( )
 
     # Process xsv command stack
     selected_actor_tconst=$( wc -l ${imdb_dataset_out_files}xsv_selected_actor_tconst.csv | awk '{print $1}' )
-    echo "title_principales_tconst count in $fxl_name: $selected_actor_tconst"
+    echo "title_principales_tconst.sh count in $fxl_name: $selected_actor_tconst"
     
     exit
 }
