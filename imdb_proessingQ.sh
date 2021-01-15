@@ -30,7 +30,7 @@ actor_nconst( )
 # Construct xsv command stack
 actor_name="'^*$1$'"
 
-actor_name="'^*$1$'
+actor_name="'^*$1$'"
     printf "xsv select nconst,primaryName,primaryProfession $imdb_dataset_in \
     | xsv search --select 2 ${actor_name} \
     | xsv search --select 3 '^act.*$' \
