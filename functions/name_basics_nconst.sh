@@ -29,9 +29,8 @@ function name_basics_nconst.sh( )
     echo "xsv select 1-6 ${imdb_dataset_in}$fxl_name\
     | xsv search --select 2 ${primaryName}\
     | xsv search --select 5 ${primaryProfession}\
-    | xsv select 1-6  "  > ${imdb_dataset_out_files}name_basics_nconst.sh"
-    # echo DEBUG
-    # | xsv select 1-6  > name_basics_nconst.sh 
+    | xsv select 1-6  "  > ${imdb_dataset_out_files}name_basics_nconst.sh
+
     # | xsv slice  --no-headers --start 1 \n" > ${imdb_dataset_out_files}name_basics_nconst.sh
     
     # Execute xsv command stack
