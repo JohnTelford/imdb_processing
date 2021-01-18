@@ -6,9 +6,10 @@ function name_basics.sh( )
     # output: name_basics.csv
 
     fxl_name="fxl_name.basics.csv"
+    cache_name="name_basics_cache.csv"
 
 # Cache file
-cache_file=$(printf "%s%s" ${imdb_dateset_cache} "name_basics_cache.csv")
+cache_file=${imdb_dateset_cache}${cache_name}
 echo $cache_file
 if test -f $cache_file; then 
     echo "Cashe file exists" 
