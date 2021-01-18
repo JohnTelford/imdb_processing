@@ -16,7 +16,8 @@
 #echo "DEBUG_control"
 #control
 
-imdb_dataset_attributes="/Volumes/Dev/imdb/imdb_dataset_attributes"
+imdb_dataset_attributes="/Volumes/Dev/imdb/imdb_dataset_attributes/"
+imdb_dateset_cache="/Volumes/Dev/imdb/imdb_dataset_cache/"
 imdb_dataset_in_files="/Volumes/Dev/imdb/imdb_dataset_files/"
 imdb_dataset_out_files="/Volumes/Dev/imdb/imdb_processing_out/"
 
@@ -24,11 +25,12 @@ imdb_dataset_in="$imdb_dataset_in_files$fxl_name"
 imdb_dataset_out="$imdb_dataset_out_files$fxl_name"
 
 # functions
-source functions/name_basics_nconst.sh
+source functions/name_basics.sh
 source functions/title_principales_tconst.sh
 source functions/title_basics_primary_title.sh
 
-name_basics_nconst.sh  "Maxi Mii" actor
+# select imdb datasetcd 
+name_basics.sh  "John Wayne" actor
 #title_principales_tconst.sh "nm0000078"
 #title_basics_primary_title.sh "tt0075213"
 
