@@ -33,21 +33,23 @@ graph TD;
 
 ### name.basics Dataset
 
-Processing starts with querying `IMDb_name.basics.csv`. It is one of the 6 `IMDb_datasets` One or more attributes are selected such as` primaryName` and `primaryProfession` to select a person and profession, such as John Wayne, Actor. Other attributes are available  for more specific selections such as,`birthYear`, `deathYear` and `knowForTitles` 
+Processing starts with querying the `name.basics.csv` dataset. It is one of the 6 `IMDb datasets` One or more attributes are used, such as` primaryName` and `primaryProfession` to select a person and profession, such as *John Wayne, Actor*. Other attributes are available for more specific selections such as,`birthYear`, `deathYear` and `knowForTitles` 
 
-The csv row or rows are selected from the `name.basics` dataset containing values for the selected attributes, as well the other attributes such as 'nconst'. It is the key to the rest of the IMDb_datasets. If no attributes are found, the program exits.
+The csv row or rows are selected from the `name.basics` dataset containing values for the selected attributes, and the other attributes such as 'nconst'. It is the key to the rest of the IMDb datasets. If no attributes are found, the program exits. All selected rows are added to the `name.basics_cache.csv` file.
 
-### title.principles Dataset
+### title.principles dataset
 
-The `title.principles.csv` dataset uses `nconst` selected from the `name.basics` IMDb_dataset to retrieved rows with the `tconst` attribute , as well as other attributes such as `ordering`, `category`, `job`, and `characters`. Four other IMDb_datasets use `tconst` 
+The `title.principles.csv` dataset uses `nconst` selected from the `name.basics` dataset to retrieved rows with the `tconst` attribute , and the other attributes such as `ordering`, `category`, `job`, and `characters`. Four other IMDb Datasets use `tconst`. All selected rows are added to the `title.principles_cache.csv` file.
 
-
+ 
 
 ## Retrieving Attributes
 
 ### Cache
 
-The purpose of each IMDb dataset cache is to speed up collecting attributes for creating human readable output. All the rows of a Dataset of successful queries are added to the Dataset cache. This is much faster than starting at the `name.basics Dataset` to get `nconst` and then the `name.basics Dataset`to get `tconst` to query Datasets. Every new Dataset query adds complete  the Dataset cache.
+The IMDb Dataset `_cache.csv` is first queried. If it fails then the IMDb Dataset is queried and successes are added to its `_cache.csv` and deduplicated.
+
+The purpose of each IMDb Dataset cache is to speed up collecting more attributes from previous queries. All the rows of an IMDb Dataset of successful queries are added to the dataset `_cache.csv`. It is faster to query dataset `_cache.csv` to find additional attributes than starting at  `name.basics` and `title.principles` datasets to get `nconst` and `tconst` to query other IMDB Datasets.
 
 #### With Cache
 

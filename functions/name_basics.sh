@@ -2,26 +2,27 @@ function name_basics.sh( )
 
 {
     echo "name_basics.sh"
-    # name_basics.sh 
-    # output: name_basics.csv
+    shell_name="name_basics.sh"
+    csv_name="name_basics.csv"
 
-    fxl_name="fxl_name.basics.csv"
     cache_name="name_basics_cache.csv"
+    cache_file=${imdb_dateset_cache}$cache_name
+    csv_file=${imdb_dataset_out_files}$csv_name
+    fxl_name="fxl_name.basics.csv"
+    fxl_file=${imdb_dataset_in}$fxl_name
+    shell_file=${imdb_dataset_out_files}$shell_name
 
 # Cache file
-cache_file=${imdb_dateset_cache}${cache_name}
-echo $cache_file
+
 if test -f $cache_file; then 
-    echo "Cashe file exists" 
+    echo "Cashe file $cache_name exists" 
 else
-    echo "Creating name_basics_cache.csv" 
-    touch ${imdb_dateset_cache}name_basics_cache.csv 
-    xsv slice ${imdb_dataset_in_files}$fxl_name --start 0 --end 0 >> ${imdb_dateset_cache}name_basics_cache.csv 
+    echo "Creating $cache_name" 
+    touch ${cache_file} 
+    xsv slice ${fxl_file} --start 0 --end 0 >> ${cache_file} 
 fi
 
-
-    #Construct xsv command stack
-
+    # Construct xsv command stack
 
     echo $1  $2 
     primaryName="'^*$1$'"
@@ -29,26 +30,33 @@ fi
 
     # create xsv shell file
 
-    echo "xsv select 1-6 ${imdb_dataset_in}$fxl_name \
-    | xsv search --select 2 ${primaryName} \
-    | xsv search --select 5 ${primaryProfession} \
-    | xsv select 1-6  \
-    | xsv slice  --no-headers  --start 1 " > ${imdb_dataset_out_files}name_basics.sh
+    # echo "xsv select 1-6 ${fxl_file} \
+    # | xsv search --select 2 ${primaryName} \
+    # | xsv search --select 5 ${primaryProfession} \
+    # | xsv select 1-6  \
+        echo "xsv search ${primaryName} ${fxl_file} \
+| xsv slice  --no-headers  --start 1 " > ${shell_file}
     
-    # Execute xsv command stack
-    chmod +x ${imdb_dataset_out_files}name_basics.sh
-    ${imdb_dataset_out_files}name_basics.sh > ${imdb_dataset_out_files}name_basics.csv
+    # execute xsv command stack
+    chmod +x ${shell_file}
+    ${shell_file} >> ${csv_file}
 
+cat ${csv_file}
+exit
     # Check if attributes found
-    if [[  -s  ${imdb_dataset_out_files}name_basics.csv ]] ; then
+    if [[  -s  ${csv_file} ]] ; then
             # Attributes found
-            echo "attributes"
+            echo "attributes found"
+            xsv cat rows ${csv_file} --output ${cache_file}
+            exit
         else
             # Attributes not found
-            echo "no attributes"
+            echo "attributes not found"
             exit
     fi
-    cat ${imdb_dataset_out_files}name_basics.csv
+
+
+    exit
 
 #  Process xsv command stack
 
