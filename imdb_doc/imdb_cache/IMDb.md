@@ -29,9 +29,18 @@ graph TD;
 
 ## Processing
 
-==Note:== `dataset` refers to an IMDb dataset
+*Note:* `dataset` refers to an IMDb dataset
 
 ### name.basics Dataset
+
+```
+Parameters are:
+-by | --birthYear
+-dy | --deathYear
+-h  | --help
+-pn | --primaryName
+-pp | --primaryProfession
+```
 
 Processing starts with querying the `name.basics.csv` dataset. It is one of the 6 `IMDb datasets` One or more attributes are used, such as` primaryName` and `primaryProfession` to select a person and profession, such as *John Wayne, Actor*. Other attributes are available for more specific selections such as,`birthYear`, `deathYear` and `knowForTitles` 
 
@@ -39,9 +48,17 @@ The csv row or rows are selected from the `name.basics` dataset containing value
 
 ### title.principles dataset
 
-The `title.principles.csv` dataset uses `nconst` selected from the `name.basics` dataset to retrieved rows with the `tconst` attribute , and the other attributes such as `ordering`, `category`, `job`, and `characters`. Four other IMDb Datasets use `tconst`. All selected rows are added to the `title.principles_cache.csv` file.
+<!-- ```
+TODO correct paramaters for this IMDb dataset
+Parameters are:
+-by | --birthYear
+-dy | --deathYear
+-h  | --help
+-pn | --primaryName
+-pp | --primaryProfession
+``` -->
 
- 
+The `title.principles.csv` dataset uses `nconst` selected from the `name.basics` dataset to retrieved rows with the `tconst` attribute , and the other attributes such as `ordering`, `category`, `job`, and `characters`. Four other IMDb Datasets use `tconst`. All selected rows are added to the `title.principles_cache.csv` file.  
 
 ## Retrieving Attributes
 

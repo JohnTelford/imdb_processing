@@ -1,1 +1,0 @@
-xsv select 1-6 /Volumes/Dev/imdb/imdb_dataset_files/fxl_name.basics.csv    | xsv search --select 2 '^*John Wayne.*\s\.$'     | xsv search --select 5 ^*actor$     | xsv select 1-6  | xsv table /n
