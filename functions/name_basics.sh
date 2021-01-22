@@ -1,75 +1,71 @@
-echo "name_basics.sh"
+name_basics.sh () {
+    echo "name_basics.sh"
 
+    # process
 
+    # Cache file
 
-function name_basics.sh
+    if test -f $cache_file; then 
+        echo "Cashe file $cache_name exists" 
+    else
+        echo "Creating $cache_name" 
+        touch ${cache_file} 
+        xsv slice ${fxl_file} --start 0 --end 0 >> ${cache_file} 
+    fi
 
-name_basics_param.sh
+    # Construct xsv command stack
 
-    {
-        echo "name_basics.sh"
-        shell_name="name_basics.sh"
-        csv_name="name_basics.csv"
+primaryName="'^*$primaryName$'"
+primaryProfession="'^*$primaryProfession$'"
 
-        cache_name="name_basics_cache.csv"
-        cache_file=${imdb_dateset_cache}$cache_name
+#regex="(?=match $primaryName)"
 
-        csv_file=${imdb_dataset_out_files}$csv_name
+    # create xsv shell file
 
-        fxl_name="fxl_name.basics.csv"
-        fxl_file=${imdb_dataset_in}$fxl_name
+    # echo "xsv select 1-6 ${fxl_file} \
+    # | xsv search --select 2 ${primaryName} \
+    # | xsv search --select 5 ${primaryProfession} \
+    # | xsv select 1-6  \
+    echo "${fxl_file}"
+    echo "${shell_file}"
 
-        shell_file=${imdb_dataset_out_files}$shell_name
+    echo "xsv select  1-13 ${fxl_file} \
+        | xsv search  ${primaryName} \
+        | xsv search ${primaryProfession} \
+        | xsv slice  --no-headers  --start 1 " > ${shell_file}
+   # | xsv search ${primaryName} \
+    # | xsv search ${primaryProfession} \
+    
+   
+    
+    # execute xsv command stack
+    chmod +x ${shell_file}
+    ${shell_file} > ${csv_file}
 
-        # Cache file
+    cat ${csv_file}
+    xsv count --no-headers ${csv_file} 
+    echo $search_count
+    exit
 
-        if test -f $cache_file; then 
-            echo "Cashe file $cache_name exists" 
+    # Check if attributes found
+    if [[  -s  ${csv_file} ]] ; then
+            # Attributes found
+            echo "attributes found"
+            xsv cat rows ${csv_file} --output ${cache_file}
+            exit
         else
-            echo "Creating $cache_name" 
-            touch ${cache_file} 
-            xsv slice ${fxl_file} --start 0 --end 0 >> ${cache_file} 
-        fi
+            # Attributes not found
+            echo "attributes not found"
+            exit
+    fi
 
-        # Construct xsv command stack
+    #  Process xsv command stack
 
-        echo $1  $2 
-        primaryName="'^*$primaryName$'"
-        primaryProfession="'^*$primaryProfession$'"
-
-        # create xsv shell file
-
-        # echo "xsv select 1-6 ${fxl_file} \
-        # | xsv search --select 2 ${primaryName} \
-        # | xsv search --select 5 ${primaryProfession} \
-        # | xsv select 1-6  \
-        echo "xsv search ${primaryName} ${fxl_file} | xsv slice  --no-headers  --start 1 " > ${shell_file}
-        
-        # execute xsv command stack
-        chmod +x ${shell_file}
-        ${shell_file} >> ${csv_file}
-
-        cat ${csv_file}
-
-        # Check if attributes found
-        if [[  -s  ${csv_file} ]] ; then
-                # Attributes found
-                echo "attributes found"
-                xsv cat rows ${csv_file} --output ${cache_file}
-                exit
-            else
-                # Attributes not found
-                echo "attributes not found"
-                exit
-        fi
-
-        #  Process xsv command stack
-
-        # cache
-        # tmp cache
-        # 
-        xsv cat rows  ${imdb_dataset_out_files}name_basics.csv > ${imdb_dateset_cache}name_basics_cache_temp.csv
-        # Create new name_basics.csv without duplicates.
-        sort -u ${imdb_dateset_cache}name_basics_cache_temp.csv > ${imdb_dateset_cache}name_basics_cache.csv
+    # cache
+    # tmp cache
+    # 
+    xsv cat rows  ${imdb_dataset_out_files}name_basics.csv > ${imdb_dateset_cache}name_basics_cache_temp.csv
+    # Create new name_basics.csv without duplicates.
+    sort -u ${imdb_dateset_cache}name_basics_cache_temp.csv > ${imdb_dateset_cache}name_basics_cache.csv
 }
 

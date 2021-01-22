@@ -1,6 +1,40 @@
-# Craft cli
+while [ ! -z "$1" ]; do
+    case "$1" in
+        -by | --birthYear)
+            shift
+            birthYear=$1
+            echo "You entered --birthYear $birthYear"
+            ;;
+        -dy | --deathYear)
+            shift
+            deathYear=$1
+            echo "You entered --deathYear $deathYear"
+            ;;
+        -h | --help)
+            shift
+                echo "Parameters are:"
+                echo "-by | --birthYear"
+                echo "-dy | --deathYear"
+                echo "-h  | --help"
+                echo "-pn | --primaryName"
+                echo "-pp | --primaryProfession"
+            exit
+            ;;
 
-# Select list of imdb dataset atributes
-xsv select 6 fxl_name.basics.csv | xsv search 2 --no-headers | sort -u > test-attribute.txt 
-
-if [[ -s name_basics_cache.csv ]] ; then echo "yes" exit else echo "no" exit fi
+        -pn | --primaryName)
+            shift
+            primaryName=$1
+            echo "You entered --primaryName $primaryName"
+            ;;
+        -pp | --primaryProfession)
+            shift
+            primaryProfession=$1
+            echo "You entered --primaryProfession $primaryProfession"
+            ;;
+        *)
+            echo "Error"
+            show_usage
+            ;;
+    esac
+    shift
+done
