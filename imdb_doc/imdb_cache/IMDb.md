@@ -3,18 +3,19 @@
 
 Jan 17, 2021
 
-## File Directories
-
-`rad indba` => imdb_dataset_attributes
-`rad imdbd` => imdb_datasets
-`rad imdbo` => imdb_processing_out
-`rad imdbp` => imdb_processing
+## rad imdb directories
+    'imdb' => '/Volumes/Dev/imdb'
+    'imdba' => '/Volumes/Dev/imdb/imdb_dataset_attributes'
+    'imdbc' => '/Volumes/Dev/imdb/imdb_dataset_cache'
+    'imdbd' => '/Volumes/Dev/imdb/imdb_dataset_files'
+    'imdbo' => '/Volumes/Dev/imdb/imdb_processing_out'
+    'imdbp' => '/Volumes/Dev/imdb/imdb_processing'
 
 ## IMDb Datasets Entity-relationship Model
 
 ![IMDb Dataset Headers](./imdb_erd.png)
 
-## Flowchart
+<!-- ## Flowchart
 
 ```mermaid
 graph TD;
@@ -23,7 +24,7 @@ graph TD;
     A-->C;
     B-->|Do it| D;
     C-->D;
-```
+``` -->
 
 
 
