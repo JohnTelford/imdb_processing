@@ -10,7 +10,7 @@
 
 
 # process named arguments
-echo "process named arguments"
+#echo "process named arguments"
 while [ ! -z "$1" ]; do
     case "$1" in
         -by | --birthYear)
@@ -25,12 +25,13 @@ while [ ! -z "$1" ]; do
             ;;
         -h | --help)
             shift
-                echo "Parameters are:"
+                echo "name_basice.sh parameters are:"
                 echo "-by | --birthYear"
                 echo "-dy | --deathYear"
                 echo "-h  | --help"
                 echo "-pn | --primaryName"
                 echo "-pp | --primaryProfession"
+                # TODO  add echo "-kft | --knownForTitles"
             exit
             ;;
 
@@ -52,11 +53,13 @@ while [ ! -z "$1" ]; do
     shift
 done
 
+# Datasets
 imdb_dataset_attributes="/Volumes/Dev/imdb/imdb_dataset_attributes/"
 imdb_dateset_cache="/Volumes/Dev/imdb/imdb_dataset_cache/"
 imdb_dataset_in_files="/Volumes/Dev/imdb/imdb_dataset_files/"
 imdb_dataset_out_files="/Volumes/Dev/imdb/imdb_processing_out/"
 
+# Dataset
 imdb_dataset_in="$imdb_dataset_in_files$fxl_name"
 imdb_dataset_out="$imdb_dataset_out_files$fxl_name"
 
