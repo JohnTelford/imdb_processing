@@ -257,8 +257,6 @@ Commands:
     table       Align CSV data into columns
 
 
-
-
 index
 =====
 Creates an index of the given CSV data, which can make other operations like
