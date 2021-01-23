@@ -1,10 +1,12 @@
 #!/bin/bash
 
-echo "name_basics.sh"
+#echo "name_basics.sh"
 
 # command line parameters
 show_usage() {
     echo "name_basice.sh parameters:"
+    echo "Note: parameters are case sensitive"
+
     echo "-by | --birthYear"
     echo "-dy | --deathYear"
     echo "-h  | --help"
@@ -14,6 +16,7 @@ show_usage() {
 }
 
 # named arguments
+#echo "parameters"
 while [ ! -z "$1" ]; do
     case "$1" in
     -by | --birthYear)
@@ -81,8 +84,8 @@ if test -f $cache_file; then
 else
     echo "creating $cache_file"
     touch ${cache_file}
-    xsv slice --start 0 --end 0 ${fxl_file} > ${cache_file}
-    #xsv cat rows ${cache_file} $cache_header
+    # create cache_file header
+    xsv slice --start 0 --end 0  ${fxl_file} > ${cache_file}
 fi
 
 # create xsv shell
@@ -95,7 +98,7 @@ primaryProfession="'^*$primaryProfession$'"
 # | xsv search --select 5 ${primaryProfession} \
 # | xsv select 1-6  \
 
-echo "shell_file - ${shell_file}"
+#echo "shell_file - ${shell_file}"
 
 # xsv select 1-50 dataset - to determine number of columns
 
@@ -110,30 +113,26 @@ chmod +x ${shell_file}
 ${shell_file} >${csv_file}
 
 cat ${csv_file}
-xsv count --no-headers ${csv_file}
-
 # FIXME  remove exit to execute cache
-
 #exit
 
 # check if attributes found
-if [[ -s ${csv_file} ]]; then
-    # Attributes found
-    echo "parameters found"
-    # FIXME xsv cat rows ${csv_file} --output ${cache_file}
-    exit
-else
-    # Attributes not found
+if [[ ! -s ${csv_file} ]]; then
+    # paraeters not found
     echo "1 or more parameters not found"
     exit
 fi
 
 # cache
-# tmp cache
-#
-xsv cat rows ${imdb_dataset_out_files}name_basics.csv >${imdb_dateset_cache}name_basics_cache_temp.csv
+#   remove _cache headers
+#   -cache -> _cache_temp
+xsv cat rows  ${imdb_dateset_cache}name_basics_cache.csv > ${imdb_dateset_cache}name_basics_cache_temp.csv
 
-# TODO   remove ..cache.csv header.before deduplicate
-# Create new name_basics.csv without duplicates.
-sort -u ${imdb_dateset_cache}name_basics_cache_temp.csv >${imdb_dateset_cache}name_basics_cache.csv
-# TODO   add .cache.csv headeer after deduplication
+#   cat csv_file rows -> _cache_temp
+xsv cat rows ${csv_file} >> ${imdb_dateset_cache}name_basics_cache_temp.csv
+
+#   create new name_basics_cache.csv,with header and without duplicates
+#   add headers to _cache
+sort -u ${imdb_dateset_cache}name_basics_cache_temp.csv >> ${imdb_dateset_cache}name_basics_cache.csv
+xsv slice --start 0 --end 0  ${fxl_file} > ${imdb_dateset_cache}name_basics_cache.csv
+

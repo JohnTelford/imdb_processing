@@ -562,9 +562,9 @@ split options:
                            number of CPUs detected.
                            [default: 0]
     --filename <filename>  A filename template to use when constructing
+                           of the field, but sanitized for shell safety.
                            the names of the output files.  The string '{}'
                            will be replaced by a value based on the value
-                           of the field, but sanitized for shell safety.
                            [default: {}.csv]
 
 Common options:
