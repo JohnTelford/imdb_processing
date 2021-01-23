@@ -116,7 +116,7 @@ cat ${csv_file}
 # FIXME  remove exit to execute cache
 #exit
 
-# check if attributes found
+# check if parameters found
 if [[ ! -s ${csv_file} ]]; then
     # paraeters not found
     echo "1 or more parameters not found"
@@ -126,13 +126,14 @@ fi
 # cache
 #   remove _cache headers
 #   -cache -> _cache_temp
-xsv cat rows  ${imdb_dateset_cache}name_basics_cache.csv > ${imdb_dateset_cache}name_basics_cache_temp.csv
-
+xsv cat rows --no-headers  ${imdb_dateset_cache}name_basics_cache.csv > ${imdb_dateset_cache}name_basics_cache_temp.csv
+#${csv_file}
 #   cat csv_file rows -> _cache_temp
-xsv cat rows ${csv_file} >> ${imdb_dateset_cache}name_basics_cache_temp.csv
+xsv cat rows --no-headers ${csv_file} >> ${imdb_dateset_cache}name_basics_cache_temp.csv
 
-#   create new name_basics_cache.csv,with header and without duplicates
+
+#   create new name_basics_cache.csv, with header and without duplicates
 #   add headers to _cache
-sort -u ${imdb_dateset_cache}name_basics_cache_temp.csv >> ${imdb_dateset_cache}name_basics_cache.csv
-xsv slice --start 0 --end 0  ${fxl_file} > ${imdb_dateset_cache}name_basics_cache.csv
+sort -u ${imdb_dateset_cache}name_basics_cache_temp.csv > ${imdb_dateset_cache}name_basics_cache.csv
+#xsv slice --start 0 --end 0  ${fxl_file} > ${imdb_dateset_cache}name_basics_cache.csv
 
