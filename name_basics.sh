@@ -68,6 +68,8 @@ imdb_dataset_out="$imdb_dataset_out_files$fxl_name"
 
 cache_name="name_basics_cache.csv"
 cache_file=${imdb_dateset_cache}$cache_name
+cache_name_temp="name_basics_cache_temp.csv"
+cache_file_temp=${imdb_dateset_cache}$cache_name_temp
 
 csv_name="name_basics.csv"
 csv_file=${imdb_dataset_out_files}$csv_name
@@ -80,8 +82,8 @@ shell_file=${imdb_dataset_out_files}$shell_name
 
 
 # cache file
-if test -f $cache_file; then
-    echo "cashe_file $cache_name exists"
+if [[  -s $cache_file ]]; then
+    echo "cashe_file $cache_file exists"
 else
     echo "creating $cache_file"
     touch ${cache_file}
@@ -102,7 +104,7 @@ echo "xsv select  1-13 ${fxl_file} \
 chmod +x ${shell_file}
 ${shell_file} >${csv_file}
 
-cat ${csv_file}
+#cat ${csv_file}
 # FIXME  remove exit to execute cache
 #exit
 
@@ -114,16 +116,23 @@ if [[ ! -s ${csv_file} ]]; then
 fi
 
 # cache
-# copy _cache to _cache_temp
-xsv cat rows  ${imdb_dateset_cache}name_basics_cache.csv > ${imdb_dateset_cache}name_basics_cache_temp.csv
+# copy cache_file to _cache_file_temp
+#xsv cat rows -no-headers ${cache_file} > ${cache_file_temp}
+cp ${cache_file}  ${cache_file_temp}
+echo "1-cache_file"
+cat ${cache_file}
+echo "1-cache_file_temp"
+cat ${cache_file_temp}
 
 #   cat csv_file >> _cache_temp
-# FIXME remove _cache_temp headers
-xsv cat rows  ${csv_file} >> ${imdb_dateset_cache}name_basics_cache_temp.csv
+xsv cat rows  ${csv_file} >> ${cache_file_temp}
+echo "2-cache_file_temp"
+cat ${cache_file_temp}
 
 #   create new _cache.csv,  without duplicates and with headers
-# FIXME add _cache headers
-sort -u ${imdb_dateset_cache}name_basics_cache_temp.csv > ${imdb_dateset_cache}name_basics_cache.csv
-#xsv slice --start 0 --end 0  ${fxl_file} > ${imdb_dateset_cache}name_basics_cache.csv
-
-
+if [[ ! -s ${cache_file} ]]; then
+    xsv slice --start 0 --end 0  ${fxl_file} > ${cache_file}
+fi
+sort -u ${cache_file_temp} > ${cache_file}
+echo "3-cache_file" 
+cat ${cache_file}
