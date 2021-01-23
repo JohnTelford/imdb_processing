@@ -13,6 +13,10 @@ show_usage() {
     echo "-pn | --primaryName"
     echo "-pp | --primaryProfession"
     echo "-kft | --knownForTitles"
+
+    echo "Syntax Rules"
+    echo "primaryName - Title Case"
+   echo "primaryProfession - actoress or actoress"
 }
 
 # named arguments
@@ -58,7 +62,7 @@ imdb_dateset_cache="/Volumes/Dev/imdb/imdb_dataset_cache/"
 imdb_dataset_in_files="/Volumes/Dev/imdb/imdb_dataset_files/"
 imdb_dataset_out_files="/Volumes/Dev/imdb/imdb_processing_out/"
 
-# Dataset
+# dataset
 imdb_dataset_in="$imdb_dataset_in_files$fxl_name"
 imdb_dataset_out="$imdb_dataset_out_files$fxl_name"
 
@@ -74,11 +78,8 @@ fxl_file=${imdb_dataset_in}$fxl_name
 shell_name="name_basics.sh"
 shell_file=${imdb_dataset_out_files}$shell_name
 
-# title_principales_tconst.sh "nm0000078"
-# title_basics_primary_title.sh "tt0075213"
 
 # cache file
-
 if test -f $cache_file; then
     echo "cashe_file $cache_name exists"
 else
@@ -89,18 +90,8 @@ else
 fi
 
 # create xsv shell
-
 primaryName="'^*$primaryName$'"
 primaryProfession="'^*$primaryProfession$'"
-
-# echo "xsv select 1-6 ${fxl_file} \
-# | xsv search --select 2 ${primaryName} \
-# | xsv search --select 5 ${primaryProfession} \
-# | xsv select 1-6  \
-
-#echo "shell_file - ${shell_file}"
-
-# xsv select 1-50 dataset - to determine number of columns
 
 echo "xsv select  1-13 ${fxl_file} \
 | xsv search  ${primaryName} \
@@ -108,7 +99,6 @@ echo "xsv select  1-13 ${fxl_file} \
 | xsv slice  --no-headers  --start 1 " >${shell_file}
 
 # execute xsv shell
-
 chmod +x ${shell_file}
 ${shell_file} >${csv_file}
 
@@ -124,16 +114,16 @@ if [[ ! -s ${csv_file} ]]; then
 fi
 
 # cache
-#   remove _cache headers
-#   -cache -> _cache_temp
-xsv cat rows --no-headers  ${imdb_dateset_cache}name_basics_cache.csv > ${imdb_dateset_cache}name_basics_cache_temp.csv
-#${csv_file}
-#   cat csv_file rows -> _cache_temp
-xsv cat rows --no-headers ${csv_file} >> ${imdb_dateset_cache}name_basics_cache_temp.csv
+# copy _cache to _cache_temp
+xsv cat rows  ${imdb_dateset_cache}name_basics_cache.csv > ${imdb_dateset_cache}name_basics_cache_temp.csv
 
+#   cat csv_file >> _cache_temp
+# FIXME remove _cache_temp headers
+xsv cat rows  ${csv_file} >> ${imdb_dateset_cache}name_basics_cache_temp.csv
 
-#   create new name_basics_cache.csv, with header and without duplicates
-#   add headers to _cache
+#   create new _cache.csv,  without duplicates and with headers
+# FIXME add _cache headers
 sort -u ${imdb_dateset_cache}name_basics_cache_temp.csv > ${imdb_dateset_cache}name_basics_cache.csv
 #xsv slice --start 0 --end 0  ${fxl_file} > ${imdb_dateset_cache}name_basics_cache.csv
+
 
