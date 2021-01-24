@@ -65,7 +65,7 @@ The `title.principles.csv` dataset uses `nconst` selected from the `name.basics`
 
 ### Cache
 
-The dataset `_cache.csv` is first queried. If it fails then the IMDb Dataset is queried and successes are added to its `_cache.csv` and deduplicated.
+The dataset `_cache.csv` is first queried. If it fails then an IMDb dataset is queried and successes are added to its `_cache.csv` and deduplicated.
 
 The purpose of each  dataset cache is to speed up collecting more parametrs from previous queries. All the rows of an IMDb Dataset of successful queries are added to the dataset `_cache.csv`. It is faster to query dataset `_cache.csv` to find additional parameters than starting at  `name.basics`for `nconst` and the  `title.principles` for `tconst`,  to query other IMDB Datasets.
 
@@ -92,4 +92,7 @@ No-headers for cache
 Cat .
 Cat cache -> cache_temp
 Sort -u cache
+
+```
+
 ```
