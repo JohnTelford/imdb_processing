@@ -84,9 +84,11 @@ shell_file=${imdb_dataset_out_files}$shell_name
 # cache file
 if [[  -s $cache_file ]]; then
     echo "cashe_file $cache_file exists"
+    cf=true
 else
     echo "creating $cache_file"
     touch ${cache_file}
+    cf=false
     # create cache_file header
     xsv slice --start 0 --end 0  ${fxl_file} > ${cache_file}
 fi
@@ -95,14 +97,41 @@ fi
 primaryName="'^*$primaryName$'"
 primaryProfession="'^*$primaryProfession$'"
 
-echo "xsv select  1-13 ${fxl_file} \
-| xsv search  ${primaryName} \
-| xsv search ${primaryProfession} \
-| xsv slice  --no-headers  --start 1 " >${shell_file}
+if $cf ; then
 
-# execute xsv shell
-chmod +x ${shell_file}
-${shell_file} >${csv_file}
+    echo "cf_true"
+    # search cache_file. If not found search fxl_file
+    echo "xsv select  1-13 ${cache_file} \
+    | xsv search  ${primaryName} \
+    | xsv search ${primaryProfession} \
+    | xsv slice  --no-headers  --start 1 " >${shell_file}
+    # execute xsv shell
+    chmod +x ${shell_file}
+    ${shell_file} >${csv_file}
+
+    # cache_file search failed
+    if [[ ! -s ${csv_file} ]]; then
+        cf=false
+        echo "xsv select  1-13 ${fxl_file} \
+        | xsv search  ${primaryName} \
+        | xsv search ${primaryProfession} \
+        | xsv slice  --no-headers  --start 1 " >${shell_file}
+        # execute xsv shell
+        chmod +x ${shell_file}
+        ${shell_file} >${csv_file}
+    fi
+
+else
+
+    echo "cf_false"
+    echo "xsv select  1-13 ${fxl_file} \
+    | xsv search  ${primaryName} \
+    | xsv search ${primaryProfession} \
+    | xsv slice  --no-headers  --start 1 " >${shell_file}
+    # execute xsv shell
+    chmod +x ${shell_file}
+    ${shell_file} >${csv_file}
+fi
 
 #cat ${csv_file}
 # FIXME  remove exit to execute cache
@@ -115,24 +144,27 @@ if [[ ! -s ${csv_file} ]]; then
     exit
 fi
 
+if $cf ; then
+    # bypass cacheprocessing
+    exit
+fi
+
 # cache
 # copy cache_file to _cache_file_temp
-#xsv cat rows -no-headers ${cache_file} > ${cache_file_temp}
 cp ${cache_file}  ${cache_file_temp}
 echo "1-cache_file"
 cat ${cache_file}
-echo "1-cache_file_temp"
-cat ${cache_file_temp}
 
 #   cat csv_file >> _cache_temp
-xsv cat rows  ${csv_file} >> ${cache_file_temp}
+xsv cat rows   ${csv_file} >> ${cache_file_temp}
 echo "2-cache_file_temp"
 cat ${cache_file_temp}
 
-#   create new _cache.csv,  without duplicates and with headers
-if [[ ! -s ${cache_file} ]]; then
-    xsv slice --start 0 --end 0  ${fxl_file} > ${cache_file}
-fi
+#   create new _cache.csv without duplicates 
+# FIXME remove cache_file_temp headers. After sort -u add cache_file headers. This will insure the header is there and not tet sorted. This will help with other IMDb datasets
+echo "3-cache_file_temp"
+cat ${cache_file_temp}
+
 sort -u ${cache_file_temp} > ${cache_file}
 echo "3-cache_file" 
 cat ${cache_file}
