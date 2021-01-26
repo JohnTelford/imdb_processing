@@ -1,1 +1,13 @@
-BEGIN {FS = ","} {printf "%5s(%s)\n", $2,$1}
+BEGIN {
+    FS = ","
+}
+{ 
+    if ( NR != 1 ) 
+    {
+        # if ( $3 != "\\N") 
+        # {   
+        #     printf "%s ", $1 ;
+        # }
+        print $0
+    }
+}
