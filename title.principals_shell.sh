@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#echo "title.principales.sh"
+#echo "title.principals.sh"
 
 # command line parameters
 show_usage() {
@@ -65,22 +65,22 @@ imdb_dateset_cache="/Volumes/Dev/imdb/imdb_dataset_cache/"
 imdb_dataset_in_files="/Volumes/Dev/imdb/imdb_dataset_files/"
 imdb_dataset_out_files="/Volumes/Dev/imdb/imdb_processing_out/"
 
-fxl_name="fxl_title.basics.csv"
+fxl_name="fxl_title.principals.csv"
 
 imdb_dataset_in="$imdb_dataset_in_files$fxl_name"
 imdb_dataset_out="$imdb_dataset_out_files$fxl_name"
 
-cache_name="title.principales_cache.csv"
+cache_name="title.principals_cache.csv"
 cache_file=${imdb_dateset_cache}$cache_name
-cache_name_temp="title.principales_cache_temp.csv"
+cache_name_temp="title.principals_cache_temp.csv"
 cache_file_temp=${imdb_dateset_cache}$cache_name_temp
 
-csv_name="title.principales_out.csv"
+csv_name="title.principals_out.csv"
 csv_file=${imdb_dataset_out_files}$csv_name
 
 fxl_file=${imdb_dataset_in}
 
-shell_name="title.principales_shell.sh"
+shell_name="title.principals_shell.sh"
 shell_file=${imdb_dataset_out_files}$shell_name
 
 
@@ -98,9 +98,7 @@ fi
 #echo "${cache_file}"
 # create xsv shell
 nconst="'^*$nconst$'"
-category="'^*$category$'"
 echo "$nconst"
-echo "$category"
 
 if $cf ; then
      echo "cf_true"

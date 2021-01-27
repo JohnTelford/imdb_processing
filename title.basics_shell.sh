@@ -100,16 +100,17 @@ else
 fi
 #echo "${cache_file}"
 # create xsv shell
-nconst="'^*$nconst$'"
-category="'^*$category$'"
-echo "$nconst"
-echo "$category"
+tconst="'^*$tconst$'"
+echo "$tconst"
+#category="'^*$category$'"
+#echo "$category"
 
+cf=false
 if $cf ; then
      echo "cf_true"
     # search cache_file. If not found search fxl_file
     echo "xsv select  1-33 ${cache_file} \
-    | xsv search  ${nconst} \
+    | xsv search  ${tconst} \
     | xsv slice  --no-headers  --start 1 " > ${shell_file}
     # execute xsv shell
     chmod +x ${shell_file}
@@ -119,7 +120,7 @@ if $cf ; then
     if [[ ! -s ${csv_file} ]]; then
         cf=false
         echo "xsv select  1-33 ${cache_file} \
-        | xsv search  ${nconst} \
+        | xsv search  ${tconst} \
         | xsv slice  --no-headers  --start 1 " > ${shell_file}
         # execute xsv shell
         chmod +x ${shell_file}
@@ -129,7 +130,7 @@ else
      echo "cf_false"
      #and_search="(?='${nconst}') (?='$category')" # (?=match ${category})'"
     echo "xsv select  1-33 ${imdb_dataset_in} \
-    | xsv search ${nconst} \
+    | xsv search ${tconst} \
     | xsv slice  --no-headers  --start 1 "  > ${shell_file}
     # execute xsv shell
     chmod +x ${shell_file}
