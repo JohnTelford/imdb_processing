@@ -12,7 +12,7 @@ show_usage() {
     echo "-ge | --genres"
     echo "-h  | --primaryTitle"
     echo "-nc | --originalTit;e"
-    echo "-rt | --runtimeMunutes"
+    echo "-rt | --runtimeMinutes"
     echo "-sy | --startYear"
     echo "-tc | --tconst"
     echo "-tt | --titleType"
@@ -38,11 +38,6 @@ while [ ! -z "$1" ]; do
 
         show_usage
         exit
-        ;;
-    -nc | --nconst)
-        shift
-        nconst=$1
-        echo "--nconst $nconst"
         ;;
     -or | --ordering)
         shift
@@ -121,7 +116,7 @@ if $cf ; then
         cf=false
         echo "xsv select  1-33 ${cache_file} \
         | xsv search  ${tconst} \
-        | xsv slice  --no-headers  --start 1 " > ${shell_file}
+        | xsv slice  --no-headers  --start 1 " > ${shell_file}q
         # execute xsv shell
         chmod +x ${shell_file}
         ${shell_file} >${csv_file}
