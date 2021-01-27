@@ -79,13 +79,14 @@ shell_file=${imdb_dataset_out_files}$shell_name
 # functions
 
  #source functions/name_basics_param.sh
+# 
 source functions/name_basics.sh
 #source functions/title_principales_tconst.sh
 #source functions/title_basics_primary_title.sh
 
 
 # select imdb datasetcd 
-name_basics.sh -pn "John Wayne"
+#name.asics_shell.sh -pn "John Wayne"
 # title_principales_tconst.sh "nm0000078"
 # title_basics_primary_title.sh "tt0075213"
 

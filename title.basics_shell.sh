@@ -1,19 +1,21 @@
 #!/bin/bash
 
-#echo "title.principales.sh"
+#echo "title.basics_shell.sh"
 
 # command line parameters
 show_usage() {
-    echo "title_principles.sh parameters:"
+    echo "title.basics_shell.sh parameters:"
     echo "Note: parameters are case sensitive"
 
-    echo "-ca | --characters"
-    echo "-ct | --category"
-    echo "-h  | --help"
-    echo "-nc | --nconst"
-    echo "-or | --ordering"
+    echo "-ad | --isAdult"
+    echo "-ey | --endYear"
+    echo "-ge | --genres"
+    echo "-h  | --primaryTitle"
+    echo "-nc | --originalTit;e"
+    echo "-rt | --runtimeMunutes"
+    echo "-sy | --startYear"
     echo "-tc | --tconst"
-
+    echo "-tt | --titleType"
     echo "Syntax Rules"
 }
 
@@ -21,18 +23,19 @@ show_usage() {
 #echo "parameters"
 while [ ! -z "$1" ]; do
     case "$1" in
-    -ca | --characters)
+    -ad |  --isAdult)
         shift
         characters=$1
-        echo "--characters $characters"
+        echo "--isAdult $ad"
         ;;
     -ct | --category)
         shift
         category=$1
         echo "--category $category"
         ;;
-    -h | --help)
+    -ey | --endYear)
         shift
+
         show_usage
         exit
         ;;
@@ -65,22 +68,22 @@ imdb_dateset_cache="/Volumes/Dev/imdb/imdb_dataset_cache/"
 imdb_dataset_in_files="/Volumes/Dev/imdb/imdb_dataset_files/"
 imdb_dataset_out_files="/Volumes/Dev/imdb/imdb_processing_out/"
 
-fxl_name="fxl_title.principals.csv"
+fxl_name="fxl_title.basics.csv"
 
 imdb_dataset_in="$imdb_dataset_in_files$fxl_name"
 imdb_dataset_out="$imdb_dataset_out_files$fxl_name"
 
-cache_name="title_principales_cache.csv"
+cache_name="title.basics_cache.csv"
 cache_file=${imdb_dateset_cache}$cache_name
-cache_name_temp="title_principales_cache_temp.csv"
+cache_name_temp="title.basics_cache_temp.csv"
 cache_file_temp=${imdb_dateset_cache}$cache_name_temp
 
-csv_name="title_principalesQ.csv"
+csv_name="title.basics_out.csv"
 csv_file=${imdb_dataset_out_files}$csv_name
 
 fxl_file=${imdb_dataset_in}
 
-shell_name="title_principalesQ.sh"
+shell_name="title.basics_shell.sh"
 shell_file=${imdb_dataset_out_files}$shell_name
 
 
@@ -98,13 +101,14 @@ fi
 #echo "${cache_file}"
 # create xsv shell
 nconst="'^*$nconst$'"
+category="'^*$category$'"
 echo "$nconst"
+echo "$category"
 
-cf=false
 if $cf ; then
      echo "cf_true"
     # search cache_file. If not found search fxl_file
-    echo "xsv select  1-13 ${cache_file} \
+    echo "xsv select  1-33 ${cache_file} \
     | xsv search  ${nconst} \
     | xsv slice  --no-headers  --start 1 " > ${shell_file}
     # execute xsv shell
@@ -114,7 +118,7 @@ if $cf ; then
     #cache_file search failed
     if [[ ! -s ${csv_file} ]]; then
         cf=false
-        echo "xsv select  1-6 ${cache_file} \
+        echo "xsv select  1-33 ${cache_file} \
         | xsv search  ${nconst} \
         | xsv slice  --no-headers  --start 1 " > ${shell_file}
         # execute xsv shell
@@ -123,8 +127,9 @@ if $cf ; then
     fi
 else
      echo "cf_false"
-    echo "xsv select  1-8 ${imdb_dataset_in} \
-    |xsv search  ${nconst} \
+     #and_search="(?='${nconst}') (?='$category')" # (?=match ${category})'"
+    echo "xsv select  1-33 ${imdb_dataset_in} \
+    | xsv search ${nconst} \
     | xsv slice  --no-headers  --start 1 "  > ${shell_file}
     # execute xsv shell
     chmod +x ${shell_file}

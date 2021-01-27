@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 #echo "name_basics.sh"
@@ -67,19 +68,18 @@ fxl_name="fxl_name.basics.csv"
 imdb_dataset_in="$imdb_dataset_in_files$fxl_name"
 imdb_dataset_out="$imdb_dataset_out_files$fxl_name"
 
-cache_name="name_basics_cache.csv"
+cache_name="name.basics_cache.csv"
 cache_file=${imdb_dateset_cache}$cache_name
-cache_name_temp="name_basics_cache_temp.csv"
+cache_name_temp="name.basics_cache_temp.csv"
 cache_file_temp=${imdb_dateset_cache}$cache_name_temp
 
-csv_name="name_basics.csv"
+csv_name="name.basics_csv"
 csv_file=${imdb_dataset_out_files}$csv_name
 
-fxl_file=${imdb_dataset_in}$fxl_name
-
-shell_name="name_basics.sh"
+fxl_file=${imdb_dataset_in}
+# FIXME
+shell_name="name.basics_shell.sh"
 shell_file=${imdb_dataset_out_files}$shell_name
-
 
 # cache file
 if [[  -s $cache_file ]]; then
@@ -127,7 +127,7 @@ else
     echo "xsv select  1-13 ${fxl_file} \
     | xsv search  ${primaryName} \
     | xsv search ${primaryProfession} \
-    | xsv slice  --no-headers  --start 1 " >${shell_file}
+    | xsv slice  --no-headers  --start 1 " > ${shell_file}
     # execute xsv shell
     chmod +x ${shell_file}
     ${shell_file} >${csv_file}

@@ -8,6 +8,13 @@ BEGIN {
         # {   
         #     printf "%s ", $1 ;
         # }
-        print $0
+        it ($4 ==)
+        print $4
     }
 }
+
+
+gawk \
+'{FS=","; \
+if($4 == "actor") print $0; next;}\
+' title_principales_out.csv
