@@ -1,4 +1,7 @@
+#! /usr/local/bin/gawk
+
 BEGIN{
+    FS=","
     # addresses.csv
     FPAT = "([^,]*)|(\"[^\"]+\")"  
 }

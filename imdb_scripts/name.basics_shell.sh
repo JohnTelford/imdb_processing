@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-#echo "name_basics.sh"
+echo "name_basics.sh"
 
 # command line parameters
 show_usage() {
