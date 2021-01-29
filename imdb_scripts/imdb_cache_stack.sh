@@ -49,7 +49,8 @@ done
 # name.basics_shell
 full_name=$(printf "%s %s" $F_NAME $L_NAME)
 echo $full_name
-grep "$full_name" ./name.basics_cache.csv | gawk -F, '$1 ~ /^nm/ {print $1}' 
+grep "$full_name" ./name.basics_cache.csv | gawk -F, '$1 ~ /^nm/ {print $1  nconst}'
+echo $nconst
 # ${imdbs}"name.basics_shell.sh" -pn "$F_NAME $L_NAME" -pp $PROFESSION
 
 # extract nconst
