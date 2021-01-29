@@ -15,7 +15,7 @@ imdbp="/Volumes/Dev/imdb/imdb_processing"
 imdbs="/Volumes/Dev/imdb/imdb_processing/imdb_scripts/"
 # getopts
 usage() {
-    echo "Usage: $0  -H -F First_name -L Last_name -P profession " 1>{&2
+    echo "Usage: $0  -H -F First_name -L Last_name -P profession " 1>&2
 }
 
 exit_abnormal () {
@@ -31,11 +31,11 @@ while getopts "HF:L:P:" options; do
             ;;
         F)
             F_NAME=${OPTARG}
-            echo $F_NAME
+            # echo $F_NAME
             ;;
         L)
             L_NAME=${OPTARG}
-            #echo $L_NAME
+            # echo $L_NAME
             ;;
         P)
             PROFESSION=${OPTARG}
@@ -47,12 +47,15 @@ done
 
 
 # name.basics_shell
+full_name=$(printf "%s %s" $F_NAME $L_NAME)
+echo $full_name
+grep "$full_name" ./name.basics_cache.csv | gawk -F, '$1 ~ /^nm/ {print $1}' 
 # ${imdbs}"name.basics_shell.sh" -pn "$F_NAME $L_NAME" -pp $PROFESSION
 
 # extract nconst
-target=($2 ~ /John Wayne/)
-echo ${target}
-gawk ${target} FS=","  ./name.basics_cache.csv
+# target=($2 ~ /John Wayne/)
+# echo ${target}
+# gawk ${target} FS=","  ./name.basics_cache.csv
 
 # extract tcont
 # gawk '$1 ~ /^tt/ { print $1 }'  RS=","  ./title.principals_cache.csv
