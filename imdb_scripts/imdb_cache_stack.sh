@@ -47,6 +47,8 @@ done
 
 
 # name.basics_shell
+
+# extract nconst
 full_name=$(printf "%s %s" $F_NAME $L_NAME)
 echo $full_name
 grep "$full_name" ./name.basics_cache.csv | gawk -F, '$1 ~ /^nm/ {print $1  nconst}'
@@ -54,9 +56,12 @@ echo $nconst
 # ${imdbs}"name.basics_shell.sh" -pn "$F_NAME $L_NAME" -pp $PROFESSION
 
 # extract nconst
-# target=($2 ~ /John Wayne/)
-# echo ${target}
-# gawk ${target} FS=","  ./name.basics_cache.csv
+#target=($3 ~ /nm0000078/)
+target="nm0000078"
+echo ${target}
+# grep "$target" ./title.principals_cache.csv | gawk -F, '$3 ~ /^nm/ {print $1  tconst}'
+grep "$target" ./title.principals_cache.csv
+
 
 # extract tcont
 # gawk '$1 ~ /^tt/ { print $1 }'  RS=","  ./title.principals_cache.csv
