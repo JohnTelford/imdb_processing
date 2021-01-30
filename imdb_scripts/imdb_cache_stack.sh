@@ -51,16 +51,18 @@ done
 # extract nconst
 full_name=$(printf "%s %s" $F_NAME $L_NAME)
 #echo $full_name
-grep "$full_name" ./name.basics_cache.csv | gawk -F, '/^nm/ {print $1 > "nconst"}'
+touch nconst
+grep "$full_name" ./name.basics_cache.csv | gawk -F, '/^nm/ { print $1 > "nconst"}' 
 #echo $nconst
 # ${imdbs}"name.basics_shell.sh" -pn "$F_NAME $L_NAME" -pp $PROFESSION
 
 # extract tconst
-target=nm0000078
-target=$(printf "%s" nm000078)
-$title.principals_nconst="nm000078"
-echo ${target}
+# target=nm0000078
+#target=$(printf "%s" nm0000078)
+touch tconst
+nconst=nm0000078
+# echo ${target}
 # grep "$target" ./title.principals_cache.csv | gawk -F, '$3 ~ /^nm/ {print $1  tconst}'
-grep "$target" ./title.principals_cache.csv | grep "$PROFESSION" | gawk -F, '/^tt/ {print $1 > "tconst"}' 
-#grep "${title.principals_nconst_cache}" ./title.principals_cache.csv | grep "$PROFESSION" | gawk -F, '/^tt/ {print $1 > "tconst"}' 
+#grep "$target" ./title.principals_cache.csv | grep "$PROFESSION" | gawk -F, '/^tt/ {print $1 > "tconst"}' 
+grep ${nconst} ./title.principals_cache.csv | grep "$PROFESSION" | gawk -F, '/^tt/ {print $1 > "tconst"}' 
 
