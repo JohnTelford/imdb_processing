@@ -46,23 +46,14 @@ while getopts "HF:L:P:" options; do
 done
 
 
-# name.basics_shell
-
-# extract nconst
+# name.basics_shell_extract nconst
 full_name=$(printf "%s %s" $F_NAME $L_NAME)
-#echo $full_name
 touch nconst
 grep "$full_name" ./name.basics_cache.csv | gawk -F, '/^nm/ { print $1 > "nconst"}' 
-#echo $nconst
-# ${imdbs}"name.basics_shell.sh" -pn "$F_NAME $L_NAME" -pp $PROFESSION
 
-# extract tconst
-# target=nm0000078
-#target=$(printf "%s" nm0000078)
+# title.principals_extract tconst
 touch tconst
 nconst=nm0000078
-# echo ${target}
-# grep "$target" ./title.principals_cache.csv | gawk -F, '$3 ~ /^nm/ {print $1  tconst}'
-#grep "$target" ./title.principals_cache.csv | grep "$PROFESSION" | gawk -F, '/^tt/ {print $1 > "tconst"}' 
-grep ${nconst} ./title.principals_cache.csv | grep "$PROFESSION" | gawk -F, '/^tt/ {print $1 > "tconst"}' 
+grep ${nconst} ./title.principals_cache.csv | grep "$PROFESSION" | gawk -F, '/^tt/ {print $1 > "tconst"}'
 
+exit 1

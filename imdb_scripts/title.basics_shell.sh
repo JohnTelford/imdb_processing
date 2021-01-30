@@ -151,3 +151,5 @@ cat ${cache_file_temp}
 sort -u ${cache_file_temp} > ${cache_file}
 echo "3-cache_file" 
 cat ${cache_file}
+
+exit 1
