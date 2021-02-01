@@ -72,7 +72,7 @@ echo $Profession
 
 #printf "%s %s," ${firstName} ${lastName} > searchName
 #echo "${firstName} ${lastName}," > searchName
-searchName="${firstName} ${lastName},"
+searchName="${firstName} ${lastName},\d+"
 echo "$searchName"
 
 
@@ -126,6 +126,10 @@ fi
     # ${shell_file} >${csv_file}
 
 rg "$searchName" name.basics.csv | gawk -F, '$0 ~ /actor/ ' >> ${cache_file}
+#rg "${cache_file}" name.basics.csv | gawk -F, '$1 ~ /nm*,/ {print $1}' #> name.basics_nconst
+rg "^nm[0-9]+" ${cache_file} | gawk -F, '{print $1}' > name.basics_nconst 
+#rg "^nm\d+," ${cache_file}
+#grep "^nm\d+," ${cache_file}
 echo $?
 exit
 
