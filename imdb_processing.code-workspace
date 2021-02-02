@@ -5,5 +5,8 @@
 		}
 	],
 	"settings": {
+		"gitlens.advanced.fileHistoryShowAllBranches": true,
+		"gitlens.advanced.fileHistoryFollowsRenames": true,
+		"gitlens.codeLens.authors.enabled": false
 	}
 }
