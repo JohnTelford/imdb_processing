@@ -126,7 +126,8 @@ fi
     # ${shell_file} >${csv_file}
 
 rg "$searchName" name.basics.csv | gawk -F, '$0 ~ /actor/ ' > ${cache_file}
-rg "^nm[0-9]+" ${cache_file} | gawk -F, '{print "nameBasics_cache_"$1".csv"}' > nameBasicsNconst  
+nameBasicsNconst=(rg "^nm[0-9]+" ${cache_file} | gawk -F, '{print "nameBasics_cache_"$1".csv"}')
+
 
 # cache name
 
