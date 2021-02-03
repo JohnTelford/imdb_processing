@@ -30,4 +30,4 @@
 #echo $nconst
 #eval $cmd $nconst
 
-rg "^nm*" nameBasicsNconst | gawk '{ print > $1}'
+rg "^nm*" nameBasicsNconst | gawk '{ printf  ""> $1}'
