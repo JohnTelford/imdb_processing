@@ -125,15 +125,28 @@ fi
     # chmod +x ${shell_file}
     # ${shell_file} >${csv_file}
 
-rg "$searchName" name.basics.csv | gawk -F, '$0 ~ /actor/ ' > ${cache_file}
+#Hurray, rg "^nm*" nameBasicsNconst | gawk '{ print"" > $1}' creates file nameBasics_cache_nm0000078.csv
 
+rg "$searchName" name.basics.csv | gawk -F, '$0 ~ /actor/ ' > ${cache_file}
+rg "^nm[0-9]+" ${cache_file} | gawk -F, '{print "nameBasics_cache_"$1"_.csv"}' > nameBasicsNconst
+#rg "^nm*" nameBasicsNconst | gawk '{ $1}' 
+rg "nm[0-9]+,*" nameBasicsNconst  | gawk -F"_" '{ printf $3 > "$0" }' #{ printf $1 > $1}'
 # create file - nameBaiscs_cache_"nm...".csv
-rg "^nm[0-9]+" ${cache_file} | gawk -F, '{print "nameBasics_cache_"$1".csv"}' | gawk -F, '{ printf  ""> $1}'
+#rg "^nm[0-9]+," ${cache_file} | gawk -F, '{printf "nameBasics_cache_"$1".csv" }' > nconst_cache
+#rg "^nm[0-9]+," ${cache_file} | gawk -F, '{print "nameBasics_cache_"$1".csv"}' 
+#rg "^nm[0-9]+" ${cache_file} | gawk -F, '{ printf $1}' > nconst
+
+#rg "^nm[0-9]+" ${cache_file} | gawk -F, '{ printf $1}' > nconst
+
+ #
+ #rg "nm[0-9]+" nconst  | gawk '{ printf "" > $1}' 
 #cp ${cache_file} >> nameBasics_cache_rip
 #rg "^nm[0-9]+" ${cache_file} | gawk -F, '{print "nameBasics_cache_"$1".csv"}' > nameBasicsNconst
-#rg "^nm*" nameBasicsNconst #| gawk -F, '{ printf  ""> $1}'
+#rg "nm*" nameBasicsNconst  | gawk -F, '{ printf""> $1}'
 #cat nameBasicsNconst | gawk  -F, '{ printf  ""> $1}' 
-# cache name
+#cat  ${cache_file} >> ${nconst_cache}
+
+
 
 echo $?
 exit

@@ -30,4 +30,9 @@
 #echo $nconst
 #eval $cmd $nconst
 
-rg "^nm*" nameBasicsNconst | gawk '{ printf  ""> $1}'
+#rg "$searchName" name.basics.csv | gawk -F, '$0 ~ /actor/ ' > ${cache_file}
+
+# create file - nameBaiscs_cache_"nm...".csv
+#rg "^nm[0-9]+" $cache_file_tmp | gawk -F, '{print $1 "nameBasics_cache_"$1".csv"}'
+
+cat >> "XXX" | (rg "nm*" nconst_cache | gawk '{printf $1}' )
