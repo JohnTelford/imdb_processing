@@ -44,18 +44,18 @@ while [ ! -z "$1" ]; do
         ;;
     -fn | --firstName)
         shift
-        firstName=$1
-        echo "--firstName $firstName"
+        first_name=$1
+        echo "--firstName $first_name"
         ;;
     -ln | --lastName)
         shift
-        lastName=$1
-        echo "--lastName $lastName"
+        last_name=$1
+        echo "--lastName $last_name"
         ;;
-    -p | --Profession)
+    -p | --profession)
         shift
-        Profession=$1
-        echo "--Profession"
+        profession=$1
+        echo "--profession $1"
         ;;
     *)
         echo "parameter error"
@@ -66,13 +66,13 @@ while [ ! -z "$1" ]; do
     shift
 done
 
-echo $firstName
-echo $lastName
-echo $Profession
+echo $first_name
+echo $last_name
+echo $profession
 
 #printf "%s %s," ${firstName} ${lastName} > searchName
 #echo "${firstName} ${lastName}," > searchName
-searchName="${firstName} ${lastName},\d+"
+searchName="${first_name} ${last_name},\d+"
 echo "$searchName"
 
 
@@ -128,9 +128,18 @@ fi
 #Hurray, rg "^nm*" nameBasicsNconst | gawk '{ print"" > $1}' creates file nameBasics_cache_nm0000078.csv
 
 rg "$searchName" name.basics.csv | gawk -F, '$0 ~ /actor/ ' > ${cache_file}
-rg "^nm[0-9]+" ${cache_file} | gawk -F, '{print "nameBasics_cache_"$1"_.csv"}' > nameBasicsNconst
+#rg "^nm[0-9]+" ${cache_file} | gawk -F, '{system( "touch " "nameBasics_cache_"$1"_.csv")}'
+logfile=nameBasic_${first_name}_${last_name}_${profession}.log
+touch $logfile
+#rg "^nm[0-9]+" ${cache_file} | gawk -F, '{system ( "echo "$1" >> "  "xxx")}' 
+rg "^nm[0-9]+" ${cache_file} | gawk -F, '{ print $1}' >> $logfile
+#rg "^nm[0-9]+" ${cache_file} | gawk -F, '{print "nameBasics_cache_"$1"_.csv"}' > nameBasicsNconst.csv
 #rg "^nm*" nameBasicsNconst | gawk '{ $1}' 
-rg "nm[0-9]+,*" nameBasicsNconst  | gawk -F"_" '{ printf $3 > "$0" }' #{ printf $1 > $1}'
+
+# This sort of WORKS
+#rg "nm[0-9]+,*" nameBasicsNconst  |  gawk -F"_" '{ printf "" > $3}' 
+#rg "^nm*" nameBasicsNconst.csv  |  gawk -F"_" '{ printf $1}' 
+
 # create file - nameBaiscs_cache_"nm...".csv
 #rg "^nm[0-9]+," ${cache_file} | gawk -F, '{printf "nameBasics_cache_"$1".csv" }' > nconst_cache
 #rg "^nm[0-9]+," ${cache_file} | gawk -F, '{print "nameBasics_cache_"$1".csv"}' 
