@@ -70,10 +70,8 @@ echo $first_name
 echo $last_name
 echo $profession
 
-#printf "%s %s," ${firstName} ${lastName} > searchName
-#echo "${firstName} ${lastName}," > searchName
-searchName="${first_name} ${last_name},\d+"
-echo "$searchName"
+search_name="${first_name} ${last_name}"
+echo "$search_name"
 
 
 # datasets
@@ -82,10 +80,8 @@ imdb_dataset_in_files="/Volumes/Dev/imdb/imdb_dataset_files/"
 imdb_dataset_out_files="/Volumes/Dev/imdb/imdb_processing_out/"
 
 # HACK  IMDb dataset files have been `ln -s` 
-#fxl_name="fxl_name.basics.csv"
+# ln -s fxl_name.basics.csv name.basics.csv
 name_basics=name.basics.csv
-
-
 
 imdb_dataset_in="$imdb_dataset_in_files$name_basics"
 name_basics_in=${name_basics}
@@ -102,84 +98,39 @@ csv_file=${imdb_dataset_out_files}$csv_name
 shell_name="name.basics_shell.sh"
 shell_file=${imdb_dataset_out_files}$shell_name
 
-if [[  -s $cache_file ]]; then
-    cf=true
-    echo "cache_file $cache_file exists"
-else
-    cf=false
-    echo "creating $cache_file"
-    touch ${cache_file}
-    # create cache_file header
-    xsv slice --start 0 --end 0  ${name_basics_in} > ${cache_file}
-fi
+# process name.basics.csv
+ rg "$search_name,\d+" name.basics.csv > nameBasics_tmp_cache.csv
+case $? in
+    0) 
+        echo "$?"
+        echo "$search_name - found in name.basics.csv dataset search"
+        ;;
+   1) 
+        echo "$?"
+        echo "$search_name - not found in name.basics.csv dataset search faild"1
+        exit 
+        ;;
+    *) 
+        shift
+         ;;
+esac
 
-#if $cf ; then
-
-    echo "cf_true"
-    # # search cache_file. If not found search fxl_file
-    # echo "xsv select  1-13 ${cache_file} \
-    # | xsv search  ${primaryName} \
-    # | xsv search ${primaryProfession} \
-    # | xsv slice  --no-headers  --start 1 " >${shell_file}
-    # # execute xsv shell
-    # chmod +x ${shell_file}
-    # ${shell_file} >${csv_file}
-
-#Hurray, rg "^nm*" nameBasicsNconst | gawk '{ print"" > $1}' creates file nameBasics_cache_nm0000078.csv
-
-rg "$searchName" name.basics.csv | gawk -F, '$0 ~ /actor/ ' > ${cache_file}
-#rg "^nm[0-9]+" ${cache_file} | gawk -F, '{system( "touch " "nameBasics_cache_"$1"_.csv")}'
-logfile=nameBasic_${first_name}_${last_name}_${profession}.log
-touch $logfile
-#rg "^nm[0-9]+" ${cache_file} | gawk -F, '{system ( "echo "$1" >> "  "xxx")}' 
-rg "^nm[0-9]+" ${cache_file} | gawk -F, '{ print $1}' >> $logfile
-#rg "^nm[0-9]+" ${cache_file} | gawk -F, '{print "nameBasics_cache_"$1"_.csv"}' > nameBasicsNconst.csv
-#rg "^nm*" nameBasicsNconst | gawk '{ $1}' 
-
-# This sort of WORKS
-#rg "nm[0-9]+,*" nameBasicsNconst  |  gawk -F"_" '{ printf "" > $3}' 
-#rg "^nm*" nameBasicsNconst.csv  |  gawk -F"_" '{ printf $1}' 
-
-# create file - nameBaiscs_cache_"nm...".csv
-#rg "^nm[0-9]+," ${cache_file} | gawk -F, '{printf "nameBasics_cache_"$1".csv" }' > nconst_cache
-#rg "^nm[0-9]+," ${cache_file} | gawk -F, '{print "nameBasics_cache_"$1".csv"}' 
-#rg "^nm[0-9]+" ${cache_file} | gawk -F, '{ printf $1}' > nconst
-
-#rg "^nm[0-9]+" ${cache_file} | gawk -F, '{ printf $1}' > nconst
-
- #
- #rg "nm[0-9]+" nconst  | gawk '{ printf "" > $1}' 
-#cp ${cache_file} >> nameBasics_cache_rip
-#rg "^nm[0-9]+" ${cache_file} | gawk -F, '{print "nameBasics_cache_"$1".csv"}' > nameBasicsNconst
-#rg "nm*" nameBasicsNconst  | gawk -F, '{ printf""> $1}'
-#cat nameBasicsNconst | gawk  -F, '{ printf  ""> $1}' 
-#cat  ${cache_file} >> ${nconst_cache}
-
-
-
-echo $?
-exit
-
-    # # cache_file search failed
-    # if [[ ! -s ${csv_file} ]]; then
-    #     cf=false
-    #     echo "xsv select  1-13 ${fxl_file} \
-    #     | xsv search  ${primaryName} \
-    #     | xsv search ${primaryProfession} \
-    #     | xsv slice  --no-headers  --start 1 " >${shell_file}
-    #     # execute xsv shell
-    #     chmod +x ${shell_file}
-    #     ${shell_file} >${csv_file}
-    # fi
-#else
-    #echo "cf_false"
-    # echo "xsv select  1-13 ${fxl_file} \
-    # | xsv search  ${primaryName} \
-    # | xsv search ${primaryPr"ofession} \
-    # | xsv slice  --no-headers  --start 1 " > ${shell_file}
-    # # execute xsv shell
-    # chmod +x ${shell_file}
-    # ${shell_file} >${csv_file}
-
-#rg "John Wayne,\d+," name.basics.csv | gawk -F, '$0 ~ /actor/ { print $0 }' >> ${cache_file}
-#fi
+grep ",$profession," nameBasics_tmp_cache.csv > /dev/null
+case $? in
+    0)
+        echo "$?"
+        echo "$search_name $profession - found in name.basics.csv"
+        logfile=nameBasic_${first_name}_${last_name}_${profession}.log
+        touch $logfile
+        cat ${tmp_cache} >> $logfile
+        ;;
+    1) 
+        echo "$?"
+        echo "$search_name $profession - not found in name.basics.csv"
+        exit 1
+        ;;
+    *) 
+        shift
+        ;;
+esac 
+exit 0
