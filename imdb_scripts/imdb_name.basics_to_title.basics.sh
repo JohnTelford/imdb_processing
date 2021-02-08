@@ -99,7 +99,7 @@ shell_name="name.basics_shell.sh"
 shell_file=${imdb_dataset_out_files}$shell_name
 
 # search_name name.basics.csv 
- rg "$search_name,\d+" name.basics.csv > xsv
+ rg "$search_name,\d+" name.basics.csv > cache_nameBasics.csv
 case $? in
     0) 
         echo "$?"
@@ -116,7 +116,7 @@ case $? in
 esac
 
 # search cache for profession  
-grep ",$profession," nameBasics_tmp_cache.csv #> /dev/null
+grep ",$profession," cache_nameBasics.csv #> /dev/null
 case $? in
     0)
         echo ${profission}
@@ -138,23 +138,28 @@ case $? in
         # #echo $log_file.csv
         # cp nameBasics_tmp_cache.csv  log_file.csv
 
-#         ;;
-#     1) 
-#         echo "$?"
-#         echo "$search_name $profession - not found in name.basics.csv"
-#         exit 1
-#         ;;
-#     *) 
-#         shift
-#         ;;
-# esac 
+        ;;
+    1) 
+        echo "$?"
+        echo "$search_name $profession - not found in name.basics.csv"
+        exit 1
+        ;;
+    *) 
+        shift
+        ;;
+esac 
 
-
+# create nameBasics primaryName_birthYean_primaryProfessionll J*
 gawk -F, '
     { print $0 } 
     {  
-        sub(  / /, "_", $2 )
-        line = $2 "_" $3 "_" $5 ".csv" ; print line
+        primaryName = $2
+        sub(  / /, "_", primaryName )
+        birthYear = $3
+        primaryProfession = $5
+        csv = "cache_nameBasics.csv"
+
+        line = primaryName "_" birthYear "_" primaryProfession  "_" csv ; print line
         printf $0 > line
-    }' nameBasics_tmp_cache.csv
+    }' cache_nameBasics.csv
 exit 1
