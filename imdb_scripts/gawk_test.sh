@@ -17,11 +17,10 @@ gawk -F, '
         primaryName = $2
         sub(  / /, "_", primaryName )
         birthYear = $3
-        primaryProffesion = $5
+        primaryProfession = $5
+        csv = "cache_nameBasics.csv"
 
-        print $0 
-
-        line = primaryName "_" birthYear "_" primaryProffesion ".csv" ; print line
+        line = primaryName "_" birthYear "_" primaryProfession  "_" csv ; print line
         printf $0 > line
     }' nameBasics_tmp_cache.csv
 
