@@ -149,7 +149,7 @@ case $? in
         ;;
 esac 
 
-# create nameBasics primaryName_birthYean_primaryProfessionll J*
+# create nameBasics primaryName_birthYean_primaryProfessionl_cache_nameBasics.csv
 gawk -F, '
     { print $0 } 
     {  
