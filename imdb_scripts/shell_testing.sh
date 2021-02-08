@@ -35,4 +35,4 @@
 # create file - nameBaiscs_cache_"nm...".csv
 #rg "^nm[0-9]+" $cache_file_tmp | gawk -F, '{print $1 "nameBasics_cache_"$1".csv"}'
 
-cat >> "XXX" | (rg "nm*" nconst_cache | gawk '{printf $1}' )
+xsv select 2,3,5 nameBasics_tmp_cache.csv | gawk '{ print gensub ( / /, "_", 1 ) }' | gawk '{ print gensub ( /,/, "_", "g" ) }' > file_name

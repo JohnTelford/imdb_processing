@@ -98,8 +98,8 @@ csv_file=${imdb_dataset_out_files}$csv_name
 shell_name="name.basics_shell.sh"
 shell_file=${imdb_dataset_out_files}$shell_name
 
-# process name.basics.csv
- rg "$search_name,\d+" name.basics.csv > nameBasics_tmp_cache.csv
+# search_name name.basics.csv 
+ rg "$search_name,\d+" name.basics.csv > xsv
 case $? in
     0) 
         echo "$?"
@@ -108,29 +108,49 @@ case $? in
    1) 
         echo "$?"
         echo "$search_name - not found in name.basics.csv dataset search faild"1
-        exit 
+        exit 1
         ;;
     *) 
         shift
          ;;
 esac
 
-grep ",$profession," nameBasics_tmp_cache.csv > /dev/null
+# search cache for profession  
+grep ",$profession," nameBasics_tmp_cache.csv #> /dev/null
 case $? in
     0)
+        echo ${profission}
         echo "$?"
         echo "$search_name $profession - found in name.basics.csv"
-        logfile=nameBasic_${first_name}_${last_name}_${profession}.log
-        touch $logfile
-        cat ${tmp_cache} >> $logfile
-        ;;
-    1) 
-        echo "$?"
-        echo "$search_name $profession - not found in name.basics.csv"
-        exit 1
-        ;;
-    *) 
-        shift
-        ;;
-esac 
+
+        #birthYear=""
+        #birthYear=xsv select 3 nameBasics_tmp_cache.csv 
+        # gawk  'BEGIN {FS=","}{ printf $3 > "{${birthYear}}" }' nameBasics_tmp_cache.csv
+        # echo $birthYear
+        # logfile="nameBasics_${fir st_name}_${last_name}_${birthYear}_${profession}.log"
+        #xsv select 2,3,5 nameBasics_tmp_cache.csv | gawk '{ print gensub ( / /, "_", 1 ) }' | gawk '{ print gensub ( /,/, "_", "1" ) }' > log_file_tmp
+
+        # touch log_file
+        # xsv select 2,3,5  | gawk '{ printf gensub ( / /, ",", 1 )".csv"}' | gawk '{ print $1  > "Qlog.csv"}'  | gawk '{printf"" > $1}'  
+        # # FIXME almost_there: Qlog contains name of John,Wayne,1907,actor. How to we log to it?
+        # touch log_file.csv
+        # cp "Qlog.csv"  log_file.csv
+        # #echo $log_file.csv
+        # cp nameBasics_tmp_cache.csv  log_file.csv
+
+#         ;;
+#     1) 
+#         echo "$?"
+#         echo "$search_name $profession - not found in name.basics.csv"
+#         exit 1
+#         ;;
+#     *) 
+#         shift
+#         ;;
+# esac 
+
+
+gawk ' Begin { FS = ","}'
+    { print "Hello"}
+
 exit 0
