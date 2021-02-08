@@ -150,7 +150,11 @@ case $? in
 # esac 
 
 
-gawk ' Begin { FS = ","}'
-    { print "Hello"}
-
-exit 0
+gawk -F, '
+    { print $0 } 
+    {  
+        sub(  / /, "_", $2 )
+        line = $2 "_" $3 "_" $5 ".csv" ; print line
+        printf $0 > line
+    }' nameBasics_tmp_cache.csv
+exit 1

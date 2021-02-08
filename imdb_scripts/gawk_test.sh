@@ -10,12 +10,18 @@
 #         print csv
 #     }' nameBasics_tmp_cache.csv
 
-# Iteration 2
+# Iteration 2 - simple and it WORKS
 gawk -F, '
     { print $0 } 
     {  
-        sub(  / /, "_", $2 )
-        line = $2 "_" $3 "_" $5  ; print line
+        primaryName = $2
+        sub(  / /, "_", primaryName )
+        birthYear = $3
+        primaryProffesion = $5
+
+        print $0 
+
+        line = primaryName "_" birthYear "_" primaryProffesion ".csv" ; print line
         printf $0 > line
     }' nameBasics_tmp_cache.csv
 
