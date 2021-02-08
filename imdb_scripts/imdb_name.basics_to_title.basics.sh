@@ -119,8 +119,8 @@ esac
 grep ",$profession," cache_nameBasics.csv #> /dev/null
 case $? in
     0)
-        echo ${profission}
         echo "$?"
+        echo ${profission}
         echo "$search_name $profession - found in name.basics.csv"
 
         #birthYear=""
