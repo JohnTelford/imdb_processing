@@ -115,7 +115,7 @@ case $? in
          ;;
 esac
 
-# search cache for profession  
+search cache for profession  
 grep ",$profession," cache_nameBasics.csv #> /dev/null
 case $? in
     0)
@@ -149,8 +149,21 @@ case $? in
         ;;
 esac 
 
-# create nameBasics primaryName_birthYean_primaryProfessionl_cache_nameBasics.csv
-gawk -F, '
+# gawk accessing values of bash variables
+# it works. required BEGIN
+xx="This is xx"
+yy="This is yy"
+zz="This is zz"
+
+gawk      -v xx="$xx"     -v yy="$yy"    -v zz="$zz" ' BEGIN {
+    print xx 
+    print yy 
+    print zz
+}'
+
+
+# create nameBasics primaryName_birthYean_primaryProfession_cache_nameBasics.csv
+gawk -F, '{
     { print $0 } 
     {  
         primaryName = $2
@@ -161,5 +174,6 @@ gawk -F, '
 
         line = primaryName "_" birthYear "_" primaryProfession  "_" csv ; print line
         printf $0 > line
-    }' cache_nameBasics.csv
-exit 1
+    }
+'} cache_nameBasics.csv
+
