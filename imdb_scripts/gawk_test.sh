@@ -32,4 +32,5 @@ gawk -F,  \
         print zz
 } '
 
+#gawk -F,    ' /0/ { print $0 }' cache_nameBasics.csv
 

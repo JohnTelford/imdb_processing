@@ -55,7 +55,7 @@ while [ ! -z "$1" ]; do
     -p | --profession)
         shift
         profession=$1
-        echo "--profession $1"
+        echo "--profession $profession"
         ;;
     *)
         echo "parameter error"
@@ -115,7 +115,7 @@ case $? in
          ;;
 esac
 
-search cache for profession  
+# search cache for profession  
 grep ",$profession," cache_nameBasics.csv #> /dev/null
 case $? in
     0)
@@ -151,29 +151,34 @@ esac
 
 # gawk accessing values of bash variables
 # it works. required BEGIN
-xx="This is xx"
-yy="This is yy"
-zz="This is zz"
+# profession="${profession}"
+# search_name="${search_name}"
+# zz="This is zz"
 
-gawk      -v xx="$xx"     -v yy="$yy"    -v zz="$zz" ' BEGIN {
-    print xx 
-    print yy 
-    print zz
-}'
+gawk -F,    ' /0/ { print $0 }' cache_nameBasics.csv
+#      ' BEGIN {
+#         print search_name 
+#         print profession
+#         print zz
+#     }
+#     {
+#         /John/ {print found } 
+#    }
+# }' cache_nameBasics.csv
 
 
 # create nameBasics primaryName_birthYean_primaryProfession_cache_nameBasics.csv
-gawk -F, '{
-    { print $0 } 
-    {  
-        primaryName = $2
-        sub(  / /, "_", primaryName )
-        birthYear = $3
-        primaryProfession = $5
-        csv = "cache_nameBasics.csv"
+# gawk -F, '{
+#     { print $0 } 
+#     {  
+#         primaryName = $2
+#         sub(  / /, "_", primaryName )
+#         birthYear = $3
+#         primaryProfession = $5
+#         csv = "cache_nameBasics.csv"
 
-        line = primaryName "_" birthYear "_" primaryProfession  "_" csv ; print line
-        printf $0 > line
-    }
-'} cache_nameBasics.csv
+#         line = primaryName "_" birthYear "_" primaryProfession  "_" csv ; print line
+#         printf $0 > line
+#     }
+# '} cache_nameBasics.csv
 
