@@ -15,7 +15,7 @@
 #         printf $0 > line
 #     }
 # '} cache_nameBasics.csv
-
+echo "Hello"
 
 # gawk accessing values of bash variables
 xx="This is xx"
@@ -26,11 +26,20 @@ gawk -F,  \
     -v xx="$xx" \
     -v yy="$yy" \
     -v zz="$zz" \
-    '{
+    'BEGIN {
         print xx 
         print yy 
         print zz
 } '
 
-#gawk -F,    ' /0/ { print $0 }' cache_nameBasics.csv
 
+# gawk -F,    -v search_name = "${search_name}" \
+#      ' BEGIN {
+#         print search_name 
+#         print profession
+#         print zz
+# #     }
+# #     {
+# #         #/John/ {print found } 
+# #    }
+# }' cache_nameBasics.csv

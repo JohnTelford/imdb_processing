@@ -154,17 +154,23 @@ esac
 # profession="${profession}"
 # search_name="${search_name}"
 # zz="This is zz"
+gawk -F,  \
+     -v search_name="${search_name}" \
+     -v profession="${profession} " \
+     ' BEGIN {  print "BEGIN" }
+            {
+                print search_name
+                print profession
+                print $0 
+                print $1
+            }
+        END { print "END"}' cache_nameBasics.csv
 
-gawk -F,    ' /0/ { print $0 }' cache_nameBasics.csv
-#      ' BEGIN {
-#         print search_name 
-#         print profession
-#         print zz
-#     }
-#     {
+        
+
+# {
 #         /John/ {print found } 
 #    }
-# }' cache_nameBasics.csv
 
 
 # create nameBasics primaryName_birthYean_primaryProfession_cache_nameBasics.csv
