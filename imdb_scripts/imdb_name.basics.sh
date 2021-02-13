@@ -1,5 +1,14 @@
 #!/bin/bash
 # imdb_name.basics_to_title.basics.sh
+
+# TODO Feb 11, 2021 😀
+# Create cache directory for each IMDb dataset query
+#   Example
+    #   directory - primaryName_birthYean_primaryProfession_cache_nameBasics 
+        #   nameBasics_header.csv 
+        #   primaryName_birthYean_primaryProfession_cache_nameBasics.csv
+        #   nconst_nameBasics
+
 #   trial run for rg replacing xsv
 
 # name.basics
@@ -99,7 +108,7 @@ shell_name="name.basics_shell.sh"
 shell_file=${imdb_dataset_out_files}$shell_name
 
 # search_name name.basics.csv 
- rg "$search_name,\d+" name.basics.csv > cache_nameBasics.csv
+ rg "$search_name,\d+," name.basics.csv > cache_nameBasics.csv
 case $? in
     0) 
         echo "$?"
@@ -159,7 +168,8 @@ gawk -F,  \
      -v profession="${profession} " \
      ' BEGIN {  print "BEGIN" }
             {
-                print search_name
+                # print search_name
+                print $2
                 print profession
                 print $0 
                 print $1
@@ -173,7 +183,7 @@ gawk -F,  \
 #    }
 
 
-# create nameBasics primaryName_birthYean_primaryProfession_cache_nameBasics.csv
+# create nameBasics cache -  primaryName_birthYean_primaryProfession_cache_nameBasics.csv
 # gawk -F, '{
 #     { print $0 } 
 #     {  
