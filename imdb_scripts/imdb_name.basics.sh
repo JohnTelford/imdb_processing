@@ -111,28 +111,12 @@ case $? in
 esac
 
 # search cache for profession  
-grep ",$profession," cache_name_basics.csv #> /dev/null
+grep ",$profession," cache_name_basics.csv
 case $? in
     0)
         echo "$?"
         echo ${profission}
         echo "$search_name $profession - found in name.basics.csv"
-
-        #birthYear=""
-        #birthYear=xsv select 3 nameBasics_tmp_cache.csv 
-        # gawk  'BEGIN {FS=","}{ printf $3 > "{${birthYear}}" }' nameBasics_tmp_cache.csv
-        # echo $birth_year
-        # logfile="nameBasics_${fir st_name}_${last_name}_${birthYear}_${profession}.log"
-        #xsv select 2,3,5 nameBasics_tmp_cache.csv | gawk '{ print gensub ( / /, "_", 1 ) }' | gawk '{ print gensub ( /,/, "_", "1" ) }' > log_file_tmp
-
-        # touch log_file
-        # xsv select 2,3,5  | gawk '{ printf gensub ( / /, ",", 1 )".csv"}' | gawk '{ print $1  > "Qlog.csv"}'  | gawk '{printf"" > $1}'  
-        # # FIXME almost_there: Qlog contains name of John,Wayne,1907,actor. How to we log to it?
-        # touch log_file.csv
-        # cp "Qlog.csv"  log_file.csv
-        # #echo $log_file.csv
-        # cp nameBasics_tmp_cache.csv  log_file.csv
-
         ;;
     1) 
         echo "$?"
@@ -144,32 +128,13 @@ case $? in
         ;;
 esac 
 
-# gawk accessing values of bash variables
-# it works. required BEGIN
-profession="${profession}"
-search_name="${search_name}"
-
-gawk -F,  \
-     -v search_name="${search_name}" \
-     -v profession="${profession} " \
-     ' BEGIN {  print "BEGIN" }
-            {
-                # print search_name
-                print $2
-                print profession
-                print $0 
-                print $1
-            }
-        END { print "END"}' cache_name_basics.csv
-
-        
+# list of name.basics.csv field numbers and names
+xsv headers name.basics.csv | xsv table  > "${imdb_dateset_cache}/headers_name.basics.csv"
 
 # create  query name_basics cache -  primaryName_birthYean_primaryProfession_cache_name_basics.csv
 gawk -F, \
     -v imdb_dateset_cache="${imdb_dateset_cache}" \
     '{
-    { print $0 } 
-    {  
         nconst = $1
 
         primaryName = $2
@@ -177,16 +142,12 @@ gawk -F, \
         birthYear = $3
         primaryProfession = $5
 
-        # print imdb_dateset_cache
-        cache = imdb_dateset_cache
-        # print cache
+        cache_dir  = imdb_dateset_cache
+        csv_file = cache_dir "/" primaryName "_" birthYear "_" primaryProfession ".csv"
+        # print `cache_name_basics.csv` record to csv_file
+        print $0 > csv_file
 
-        file = cache "/" primaryName "_" birthYear "_" primaryProfession ".csv"
-        print $0 > file
-        # print `cache_name_basics.csv` record to file
+        print nconst > cache_dir "/" primaryName "_" birthYear "_" primaryProfession ".nconst"
+    '} cache_name_basics.csv
 
-        print nconst > cache "/" primaryName "_" birthYear "_" primaryProfession ".nconst"
-    }
- '} cache_name_basics.csv
-
-
+exit 0
