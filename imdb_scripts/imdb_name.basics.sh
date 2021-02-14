@@ -1,18 +1,7 @@
 #!/bin/bash
-# imdb_name.basics_to_title.basics.sh
+# imdb_name.basics.sh
+echo "imdb_name.basics.sh"
 
-# TODO Feb 11, 2021 😀
-# Create cache directory for each IMDb dataset query
-#   Example
-    #   directory - primaryName_birthYean_primaryProfession_cache_nameBasics 
-        #   nameBasics_header.csv 
-        #   primaryName_birthYean_primaryProfession_cache_nameBasics.csv
-        #   nconst_nameBasics
-
-#   trial run for rg replacing xsv
-
-# name.basics
-echo "name.basics"
 
 # command line parameters
 show_usage() {
@@ -33,18 +22,18 @@ show_usage() {
 }
 
 # named arguments
-#echo "parameters"
+#echo "named arguments"
 while [ ! -z "$1" ]; do
     case "$1" in
     -by | --birthYear)
         shift
         birthYear=$1
-        echo "--birthYear $birthYear"
+        echo "--birthYear $birth_year"
         ;;
     -dy | --deathYear)
         shift
         deathYear=$1
-        echo "--deathYear $deathYear"
+        echo "--deathYear $death_year"
         ;;
     -h | --help)
         shift
@@ -69,7 +58,7 @@ while [ ! -z "$1" ]; do
     *)
         echo "parameter error"
         show_usage
-        exit
+        exit 1
         ;;
     esac
     shift
@@ -82,21 +71,18 @@ echo $profession
 search_name="${first_name} ${last_name}"
 echo "$search_name"
 
-
 # datasets
-imdb_dateset_cache="/Volumes/Dev/imdb/imdb_dataset_cache/"
-imdb_dataset_in_files="/Volumes/Dev/imdb/imdb_dataset_files/"
+# HACK  IMDb dataset files have been `ln -s` 
+# ln -s name.basics.csv name.basics.csv
+imdb_dateset_cache="/Volumes/Dev/imdb/imdb_dataset_cache/name_basics"
 imdb_dataset_out_files="/Volumes/Dev/imdb/imdb_processing_out/"
 
-# HACK  IMDb dataset files have been `ln -s` 
-# ln -s fxl_name.basics.csv name.basics.csv
 name_basics=name.basics.csv
 
 imdb_dataset_in="$imdb_dataset_in_files$name_basics"
-name_basics_in=${name_basics}
 imdb_dataset_out="$imdb_dataset_out_files$name_basics"
 
-cache_name="name.basics_cache.csv"
+cache_name="cache_name_basics.csv"
 cache_file=${imdb_dateset_cache}$cache_name
 cache_name_temp="name.basics_cache_temp.csv"
 cache_file_temp=${imdb_dateset_cache}$cache_name_temp
@@ -108,7 +94,7 @@ shell_name="name.basics_shell.sh"
 shell_file=${imdb_dataset_out_files}$shell_name
 
 # search_name name.basics.csv 
- rg "$search_name,\d+," name.basics.csv > cache_nameBasics.csv
+ rg "$search_name,\d+," name.basics.csv > cache_name_basics.csv
 case $? in
     0) 
         echo "$?"
@@ -125,7 +111,7 @@ case $? in
 esac
 
 # search cache for profession  
-grep ",$profession," cache_nameBasics.csv #> /dev/null
+grep ",$profession," cache_name_basics.csv #> /dev/null
 case $? in
     0)
         echo "$?"
@@ -135,7 +121,7 @@ case $? in
         #birthYear=""
         #birthYear=xsv select 3 nameBasics_tmp_cache.csv 
         # gawk  'BEGIN {FS=","}{ printf $3 > "{${birthYear}}" }' nameBasics_tmp_cache.csv
-        # echo $birthYear
+        # echo $birth_year
         # logfile="nameBasics_${fir st_name}_${last_name}_${birthYear}_${profession}.log"
         #xsv select 2,3,5 nameBasics_tmp_cache.csv | gawk '{ print gensub ( / /, "_", 1 ) }' | gawk '{ print gensub ( /,/, "_", "1" ) }' > log_file_tmp
 
@@ -160,9 +146,9 @@ esac
 
 # gawk accessing values of bash variables
 # it works. required BEGIN
-# profession="${profession}"
-# search_name="${search_name}"
-# zz="This is zz"
+profession="${profession}"
+search_name="${search_name}"
+
 gawk -F,  \
      -v search_name="${search_name}" \
      -v profession="${profession} " \
@@ -174,27 +160,33 @@ gawk -F,  \
                 print $0 
                 print $1
             }
-        END { print "END"}' cache_nameBasics.csv
+        END { print "END"}' cache_name_basics.csv
 
         
 
-# {
-#         /John/ {print found } 
-#    }
+# create  query name_basics cache -  primaryName_birthYean_primaryProfession_cache_name_basics.csv
+gawk -F, \
+    -v imdb_dateset_cache="${imdb_dateset_cache}" \
+    '{
+    { print $0 } 
+    {  
+        nconst = $1
 
+        primaryName = $2
+        sub(  / /, "_", primaryName )
+        birthYear = $3
+        primaryProfession = $5
 
-# create nameBasics cache -  primaryName_birthYean_primaryProfession_cache_nameBasics.csv
-# gawk -F, '{
-#     { print $0 } 
-#     {  
-#         primaryName = $2
-#         sub(  / /, "_", primaryName )
-#         birthYear = $3
-#         primaryProfession = $5
-#         csv = "cache_nameBasics.csv"
+        # print imdb_dateset_cache
+        cache = imdb_dateset_cache
+        # print cache
 
-#         line = primaryName "_" birthYear "_" primaryProfession  "_" csv ; print line
-#         printf $0 > line
-#     }
-# '} cache_nameBasics.csv
+        file = cache "/" primaryName "_" birthYear "_" primaryProfession ".csv"
+        print $0 > file
+        # print `cache_name_basics.csv` record to file
+
+        print nconst > cache "/" primaryName "_" birthYear "_" primaryProfession ".nconst"
+    }
+ '} cache_name_basics.csv
+
 

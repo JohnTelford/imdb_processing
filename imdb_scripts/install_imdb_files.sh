@@ -11,7 +11,7 @@ mkdir $imdb_dataset_files
 cd $imdb_dataset_files
 echo $PWD
 
-for file_name in name.basics title.akas title.basics title.episode title.principals title.ratings
+for file_name in name.basics title.akas title.basics title.episode title.principals title.ratings title.crew
     do
         # File names
             # File names
@@ -33,14 +33,14 @@ for file_name in name.basics title.akas title.basics title.episode title.princip
                 tr '\t' ',' < $source_tsv > $source_csv
                 /bin/rm -f $source_tsv
 
-            printf "fxl\n"
-                #  Force a CSV file to have same-length records by either padding or truncating them.
-                fxl="fxl_"
-                xsv fixlengths $source_csv > $fxl$source_csv
-                /bin/rm -f $source_csv
-            printf "index\n" 
-                # Create an index for a CSV file. This is very quick and provides constant time indexing into the CSV file.
-                xsv index $fxl$source_csv
+            # printf "fxl\n"
+            #     #  Force a CSV file to have same-length records by either padding or truncating them.
+            #     fxl="fxl_"
+            #     xsv fixlengths $source_csv > $fxl$source_csv
+            #     /bin/rm -f $source_csv
+            # printf "index\n" 
+            #     # Create an index for a CSV file. This is very quick and provides constant time indexing into the CSV file.
+            #     xsv index $fxl$source_csv
                 
             # printf "hdrs\n"
             #     #  Show the headers of CSV data. Or show the intersection of all headers between many CSV files.
