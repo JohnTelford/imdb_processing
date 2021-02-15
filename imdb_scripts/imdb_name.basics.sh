@@ -74,7 +74,8 @@ echo "$search_name"
 # datasets
 # HACK  IMDb dataset files have been `ln -s` 
 # ln -s name.basics.csv name.basics.csv
-imdb_dateset_cache="/Volumes/Dev/imdb/imdb_dataset_cache/name_basics"
+name_basics_cache="/Volumes/Dev/imdb/imdb_processing/imdb_scripts/imdb_dataset_cache/name_basics"
+echo "${name_basics_cache}"
 imdb_dataset_out_files="/Volumes/Dev/imdb/imdb_processing_out/"
 
 name_basics=name.basics.csv
@@ -129,11 +130,12 @@ case $? in
 esac 
 
 # list of name.basics.csv field numbers and names
-xsv headers name.basics.csv | xsv table  > "${imdb_dateset_cache}/headers_name.basics.csv"
+echo "$name_basics_cache/headers_name.basics.csv"
+xsv headers name.basics.csv | xsv table  > "$name_basics_cache/headers_name.basics.csv"
 
 # create  query name_basics cache -  primaryName_birthYean_primaryProfession_cache_name_basics.csv
 gawk -F, \
-    -v imdb_dateset_cache="${imdb_dateset_cache}" \
+    -v name_basics_cache="$name_basics_cache" \
     '{
         nconst = $1
 
@@ -142,12 +144,11 @@ gawk -F, \
         birthYear = $3
         primaryProfession = $5
 
-        cache_dir  = imdb_dateset_cache
-        csv_file = cache_dir "/" primaryName "_" birthYear "_" primaryProfession ".csv"
-        # print `cache_name_basics.csv` record to csv_file
+        csv_file = name_basics_cache "/" primaryName "_" birthYear "_" primaryProfession ".csv"
+        #print csv _file
         print $0 > csv_file
 
-        print nconst > cache_dir "/" primaryName "_" birthYear "_" primaryProfession ".nconst"
-    '} cache_name_basics.csv
+        print nconst > name_basics_cache "/" name_basics "/" primaryName "_" birthYear "_" primaryProfession ".nconst"
+    '} cache_name_basics.csv 
 
 exit 0
