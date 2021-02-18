@@ -1,0 +1,7 @@
+nm0000078,John Wayne,1907,1979,actor,producer,soundtrack,tt0031971,tt0053580,tt0056217,tt0065126
+1   nconst
+2   primaryName
+3   birthYear
+4   deathYear
+5   primaryProfession
+6   knownForTitles

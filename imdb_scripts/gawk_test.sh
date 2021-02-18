@@ -42,3 +42,47 @@
 # #    }
 # }' cache_nameBasics.csv
 
+#gawk ' $4 ~ /writer/ ' title.principals.csv
+
+# echo -e "unixtime;host_name;ip_adress;description;2;0;1\n1234567890;hName;hIP;hDesc;2;1;0" |
+# gawk -F";" 'BEGIN {OFS=";"} {
+#   if (NR<2) next;
+#   $1=strftime("%Y-%m-%d %H:%M:%S", $1);
+# #   $5=($5==2?"CRITICAL":$5);
+# #   $6=($6?"Yes":"No") ; $7=($7?"Yes":"No") ;
+#   print}'
+
+# gawk -F, '{
+#     $1;
+#     $2;
+#     $3;
+#     print
+# }' name.basics.csv
+
+Removes "" and []
+gawk 'BEGIN {
+    FPAT = "([^,]*)|(\"([^\"]|\"\")*\")" 
+}
+{
+    print "NF = ", NF
+    for (i = 6; i <= NF; i++) {
+        # get text within [ ]
+        if (substr($i, 1, 1) == "\[") {
+            len = length($i)
+            $i = substr($i, 2, len -2)
+        }
+        
+        # get text within two quotes
+        if (substr($i, 1, 1) == "\"") {
+            len = length($i)
+            $i = substr($i, 2, len - 2)
+        }
+        printf("$%d = <%s>\n", i, $i)
+    }
+}' 
+
+# _bsite=$(sed 's|/|\\/|g' <<< $website)
+primary_name=$(set 's/ /_/' <<< $primary_name)
+
+ls ./imdb_dataset_cache/name_basics/"John_Wayne"*.csv 
+
