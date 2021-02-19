@@ -84,5 +84,4 @@ gawk 'BEGIN {
 # _bsite=$(sed 's|/|\\/|g' <<< $website)
 primary_name=$(set 's/ /_/' <<< $primary_name)
 
-ls ./imdb_dataset_cache/name_basics/"John_Wayne"*.csv 
 

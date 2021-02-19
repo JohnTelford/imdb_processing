@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 DIRNAME=$(dirname "$0")
 cd "$DIRNAME" || exit
 
@@ -8,7 +8,6 @@ echo "imdb_dataset_processing"
 function help() {
     cat <<EOF
     imdb_dataset_processing.sh parameters
-    Note: parameters are case sensitiv
 
     ===========
     name.basics
@@ -68,20 +67,18 @@ while [ ! -z "$1" ]; do
         cat attributes/genres_title.basics.txt
         shift
         ;;
-    -ln | --last_name)
-        shift
-        last_name=$1
-        echo "--lastName $last_name"
-        ;;
-    -pn | --primary_name)
-        shift
-        primary_name=$1
-        echo "--primary_name $primary_name"
-        ;;
     -p | --profession)
         shift
         profession=$1
         echo "--profession $profession"
+        ;;
+    -pn | --primary_name)
+        shift
+        primary_name=$1
+        # title case primary_name
+        primary_name=$(gsed -e "s/\b./\u\0/g" <<< $primary_name)
+
+        echo "--primary_name $primary_name"
         ;;
     -lp | --profession_list)
         printf "\n==============="
@@ -110,25 +107,35 @@ while [ ! -z "$1" ]; do
     shift
 done
 
-# returned - nconst
+# return - nconst
 # required parameters - primaryName, primaryProfession
 
 # check cache
 # ./imdb_dataset_cache/name_basics
-echo $primary_name
+
+# replace space with _
 primary_name=$(sed 's/ /_/' <<< $primary_name)
-echo $primary_name
 
-ls_file=./imdb_dataset_cache/name_basics/${primary_name}*.csv
-echo $ls_file
-FILE=$ls_file
-echo ${FILE}
-if [[ -s ${FILE} ]]; then
-      echo "${FILE} doesn't exist or is empty"
+# .csv file
+pn_csv=./imdb_dataset_cache/name_basics/${primary_name}*.csv
+FILE=$pn_csv
+if [ -s ${pn_csv} ]; then
+    echo "${pn_csv} exists and not empty"
 else
-        echo "${FILE} exists and not empty"
+     echo "${pn_csv} doesn't exist or is empty"
 fi
+cat ${pn_csv}
 
-cat ${FILE}
+# nconst
+pn_nconst=./imdb_dataset_cache/name_basics/${primary_name}*.nconst
+FILE=$pn_nconst
+if [ -s ${pn_nconst} ]; then
+    echo "${pn_nconst} exists and not empty"
+else
+     echo "${pn_nconst} doesn't exist or is empty"
+fi
+cat ${pn_nconst}
+
+
 
 exit 1
