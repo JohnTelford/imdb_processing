@@ -13,9 +13,9 @@ function help() {
     name.basics
 
     -h   | --help
-    -p   | --profession
-    -pn  | --primary_name  ["first_name last_name"]
-    -lp  | --profession_list
+    -pn  | --primary_name  [example: "first_name last_name"]
+    -pp  | --primary_profession
+    -lp  | --primary_profession_list
     -kft | --known_for_titles
     -by  | --birthYear
     -dy  | --deathYear
@@ -67,20 +67,20 @@ while [ ! -z "$1" ]; do
         cat attributes/genres_title.basics.txt
         shift
         ;;
-    -p | --profession)
-        shift
-        profession=$1
-        echo "--profession $profession"
-        ;;
     -pn | --primary_name)
         shift
         primary_name=$1
         # title case primary_name
         primary_name=$(gsed -e "s/\b./\u\0/g" <<< $primary_name)
-
         echo "--primary_name $primary_name"
         ;;
-    -lp | --profession_list)
+    -pp | --primary_profession)
+        shift
+        primary_profession=$1
+        echo "--primary_profession $primary_profession"
+        ;;
+    -lp | --primary_profession_list)
+    echo "DEBUG"
         printf "\n==============="
         printf "\n%s\n\n" "list profession"
         cat attributes/primary_profession.name.basics.txt
@@ -92,7 +92,7 @@ while [ ! -z "$1" ]; do
         echo "--title_type $title_type"
         ;;
 
-    -ltt | --title_type_kist)
+    -ltt | --title_type_list)
         printf "\n==============="
         printf "\n%s\n\n" "list title_type"
         cat attributes/title_type_title.basics.txt
@@ -135,7 +135,5 @@ else
      echo "${pn_nconst} doesn't exist or is empty"
 fi
 cat ${pn_nconst}
-
-
 
 exit 1
