@@ -84,4 +84,10 @@ gawk 'BEGIN {
 # _bsite=$(sed 's|/|\\/|g' <<< $website)
 primary_name=$(set 's/ /_/' <<< $primary_name)
 
+gawk ' /actor/ "print"' attributes/primary_profession.name.basics.txt
 
+if [ rg "${primary_profession}" attributes/primary_profession.name.basics.txt ] ; then
+    echo "${primary_profession} is a primary_profession"
+else
+    echo "${primary_profession} is NOT a primary_profession"
+fi

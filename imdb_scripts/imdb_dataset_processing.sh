@@ -51,7 +51,7 @@ while [ ! -z "$1" ]; do
         help
         exit
         ;;
-    -fn | --firstName)
+    -fn | --first_name)
         shift
         first_name=$1
         echo "--firstName $first_name"
@@ -77,21 +77,37 @@ while [ ! -z "$1" ]; do
     -pp | --primary_profession)
         shift
         primary_profession=$1
-        echo "--primary_profession $primary_profession"
+
+            if  rg "${primary_profession}" attributes/primary_profession.name.basics.txt  ; then
+                echo "${primary_profession} is a primary_profession"
+            else
+                echo "${primary_profession} is NOT a primary_profession"
+                exit 1
+            fi
+
         ;;
     -lp | --primary_profession_list)
     echo "DEBUG"
-        printf "\n==============="
-        printf "\n%s\n\n" "list profession"
+        printf "\n======================="
+        printf "\n%s\n\n" "list primary_profession"
         cat attributes/primary_profession.name.basics.txt
+        echo ""
         shift
         ;;
     -tt | --title_type)
         shift
         title_type=$1
+            echo $title_type
+
+            if  rg "${title_type}" attributes/title_type_title.basics.txt  ; then
+                echo "${title_type} is a title_type"
+            else
+                echo "${title_type} is NOT a title_type"
+                exit 1
+            fi
+
         echo "--title_type $title_type"
         ;;
-
     -ltt | --title_type_list)
         printf "\n==============="
         printf "\n%s\n\n" "list title_type"
@@ -100,7 +116,7 @@ while [ ! -z "$1" ]; do
         ;;
     *)
         echo "parameter error"
-        show_usage
+        help
         exit 1
         ;;
     esac
@@ -117,14 +133,17 @@ done
 primary_name=$(sed 's/ /_/' <<< $primary_name)
 
 # .csv file
-pn_csv=./imdb_dataset_cache/name_basics/${primary_name}*.csv
+pn_csv=imdb_dataset_cache/name_basics/${primary_name}*.csv
 FILE=$pn_csv
-if [ -s ${pn_csv} ]; then
+
+# FIXME
+if  [ -s ${pn_csv} ]; then
     echo "${pn_csv} exists and not empty"
 else
      echo "${pn_csv} doesn't exist or is empty"
 fi
-cat ${pn_csv}
+
+#cat ${pn_csv}
 
 # nconst
 pn_nconst=./imdb_dataset_cache/name_basics/${primary_name}*.nconst
@@ -134,6 +153,6 @@ if [ -s ${pn_nconst} ]; then
 else
      echo "${pn_nconst} doesn't exist or is empty"
 fi
-cat ${pn_nconst}
+#cat ${pn_nconst}
 
 exit 1
