@@ -48,30 +48,30 @@ while [ ! -z "$1" ]; do
         ;;
     -h | --help)
         shift
-        help
+            help
         exit
-        ;;
-    -fn | --first_name)
-        shift
-        first_name=$1
-        echo "--firstName $first_name"
         ;;
     -g | --genres)
         shift
         genres=$1
+        #  FIXME check against list
         echo "--genera $genres"
         ;;
     -lg | --genres_list)
-        printf "\n==========="
-        printf "\n%s\n\n" "list genres"
-        cat attributes/genres_title.basics.txt
         shift
+
+            printf "\n==========="
+            printf "\n%s\n\n" "list genres"
+            cat attributes/genres_title.basics.txt
+
         ;;
     -pn | --primary_name)
         shift
         primary_name=$1
-        # title case primary_name
-        primary_name=$(gsed -e "s/\b./\u\0/g" <<< $primary_name)
+
+            # title_case primary_name
+            primary_name=$(gsed -e "s/\b./\u\0/g" <<< $primary_name)
+
         echo "--primary_name $primary_name"
         ;;
     -pp | --primary_profession)
@@ -87,12 +87,13 @@ while [ ! -z "$1" ]; do
 
         ;;
     -lp | --primary_profession_list)
-    echo "DEBUG"
-        printf "\n======================="
-        printf "\n%s\n\n" "list primary_profession"
-        cat attributes/primary_profession.name.basics.txt
-        echo ""
         shift
+
+            printf "\n======================="
+            printf "\n%s\n\n" "list primary_profession"
+            cat attributes/primary_profession.name.basics.txt
+            echo ""
+
         ;;
     -tt | --title_type)
         shift
@@ -109,14 +110,16 @@ while [ ! -z "$1" ]; do
         echo "--title_type $title_type"
         ;;
     -ltt | --title_type_list)
-        printf "\n==============="
-        printf "\n%s\n\n" "list title_type"
-        cat attributes/title_type_title.basics.txt
         shift
+
+            printf "\n==============="
+            printf "\n%s\n\n" "list title_type"
+            cat attributes/title_type_title.basics.txt
+
         ;;
     *)
         echo "parameter error"
-        help
+            help
         exit 1
         ;;
     esac
@@ -133,11 +136,10 @@ done
 primary_name=$(sed 's/ /_/' <<< $primary_name)
 
 # .csv file
-pn_csv=imdb_dataset_cache/name_basics/${primary_name}*.csv
-FILE=$pn_csv
-
+pn_csv=./imdb_dataset_cache/name_basics/csv_${primary_name}_name.basics
+echo $pn_csv
 # FIXME
-if  [ -s ${pn_csv} ]; then
+if  [ -s $pn_csv ]; then
     echo "${pn_csv} exists and not empty"
 else
      echo "${pn_csv} doesn't exist or is empty"
@@ -146,13 +148,14 @@ fi
 #cat ${pn_csv}
 
 # nconst
-pn_nconst=./imdb_dataset_cache/name_basics/${primary_name}*.nconst
+pn_nconst=./imdb_dataset_cache/name_basics/nconst_${primary_name}_name.basics
 FILE=$pn_nconst
 if [ -s ${pn_nconst} ]; then
     echo "${pn_nconst} exists and not empty"
 else
      echo "${pn_nconst} doesn't exist or is empty"
 fi
-#cat ${pn_nconst}
+
+rg "John Wayne,1907" name.basics.csv | gawk -F, '$0 ~ /actor/ ' 
 
 exit 1

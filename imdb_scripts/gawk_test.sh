@@ -90,4 +90,4 @@ if [ rg "${primary_profession}" attributes/primary_profession.name.basics.txt ] 
     echo "${primary_profession} is a primary_profession"
 else
     echo "${primary_profession} is NOT a primary_profession"
-fi
+f
