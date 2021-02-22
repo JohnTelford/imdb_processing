@@ -156,6 +156,6 @@ else
      echo "${pn_nconst} doesn't exist or is empty"
 fi
 
-rg "John Wayne,1907" name.basics.csv | gawk -F, '$0 ~ /actor/ ' 
+rg "John Wayne,1907" $name_basics | gawk -F, '$0 ~ /actor/ ' 
 
 exit 1
