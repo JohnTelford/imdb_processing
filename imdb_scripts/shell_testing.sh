@@ -30,7 +30,7 @@
 #echo $nconst
 #eval $cmd $nconst
 
-rg "$searchName" name.basics.csv | gawk -F, '$0 ~ /actor/ ' 
+# rg "$searchName" name.basics.csv | gawk -F, '$0 ~ /actor/ ' 
 
 # create file - nameBaiscs_cache_"nm...".csv
 #rg "^nm[0-9]+" $cache_file_tmp | gawk -F, '{print $1 "nameBasics_cache_"$1".csv"}'
@@ -38,3 +38,6 @@ rg "$searchName" name.basics.csv | gawk -F, '$0 ~ /actor/ '
 #xsv select 2,3,5 nameBasics_tmp_cache.csv | gawk '{ print gensub ( / /, "_", 1 ) }' | gawk '{ print gensub ( /,/, "_", "g" ) }' > file_name
 
 #export EDITOR /Applications/CotEditor.app
+
+
+find . -name .git -prune -name .DS_Store -prune -o -print | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/"
