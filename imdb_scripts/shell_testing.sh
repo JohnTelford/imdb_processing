@@ -40,6 +40,7 @@
 #export EDITOR /Applications/CotEditor.app
 
 
-find . -name .git -prune -name '.DS_Store' -prune -o -print | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/" | gawk -F"-" '{ print $2}' | sort -u
+#find . -name .git -prune -name '.DS_Store' -prune -o -print | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/" | gawk -F"-" '{ print $2}' | sort -u
 
-gawk -F- {print $1}
+fd -E "\.*" | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/"
+
