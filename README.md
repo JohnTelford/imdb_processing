@@ -16,7 +16,8 @@ toc:
 - [x]   References
 - [ ]   User interface
 - [x]   Title case `actor_name`
-- [ ]   Create cache directory for each IMDb dataset
+- [x]   Export links to IMDb datasets as environmental variables
+- [x]   Create cache directory for each IMDb dataset
   - [x] name_basics directory
 *NOTE - check if  `query_results.csv` exists*  
 Example query results - `John_Wayne_1907_actor`
@@ -51,23 +52,37 @@ Example query results - `John_Wayne_1907_actor`
 |  `title.principals.tsv.gz` |    principal cast / crew for titles |
 |  `title.ratings.tsv.gz`|    IMDb rating and votes information for titles
   
-##  MDb Datasets Exports
+## Links to IMDb Datasets Exports
 
-IMDb datasets are exported as environmental variables so shell scripts can easily access them. An example of use is `rg "John Wayne" $name_basics`
+Links to IMDb datasets are exported as environmental variables so shell scripts can easily access them. 
+
+An example of use is `rg "John Wayne" name_basics`
+
 ```bash
-export name_basics=/Volumes/Dev/imdb/imdb_dataset_files/name.basics.csv
-export title_akas=/Volumes/Dev/imdb/imdb_dataset_files/title.akas.csv
-export title_basics=/Volumes/Dev/imdb/imdb_dataset_files/title.basics.csv
-export title_crew=/Volumes/Dev/imdb/imdb_dataset_files/title.crew.csv
-export title_episode=/Volumes/Dev/imdb/imdb_dataset_files/title.episode.csv
-export title_principals=/Volumes/Dev/imdb/imdb_dataset_files/title.principals.csv
-export title_ratings=/Volumes/Dev/imdb/imdb_dataset_files/title.ratings.csv
+# add exports to .zshrc
+ln -s /Volumes/Dev/imdb/imdb_dataset_files/name.basics.csv name_basics
+export $name_basics
+
+ln -s /Volumes/Dev/imdb/imdb_dataset_files/title.akas.csv title_akas
+export $title_akas
+
+ln -s /Volumes/Dev/imdb/imdb_dataset_files/title.crew.csv title_crew
+export $title_crew
+
+ln -s /Volumes/Dev/imdb/imdb_dataset_files/title.episode.csv title_episode
+export $title_episodes
+
+ln -s /Volumes/Dev/imdb/imdb_dataset_files/title.principals.csv title_principals
+export title_principals
+
+ln -s /Volumes/Dev/imdb/imdb_dataset_files/title.ratings.csv title_ratings
+export title_ratings
 ```
 
 ##  Dataset Keys
 
   
-`nconst` is the *name* constant and the first attribute of the `name.basics` dataset. It is used  in querying the `title.principales` dataset.
+`nconst` is the *name* constant and the first attribute of the `name.basics` dataset. It is used  forra querying the `title.principales` dataset.
 
 `nconst` points to `tconst` constants in the `title.principales` dataset.  They are used to query other IMDb datasets as shown in the diagram above.
   
