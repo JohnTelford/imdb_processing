@@ -42,5 +42,20 @@
 
 #find . -name .git -prune -name '.DS_Store' -prune -o -print | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/" | gawk -F"-" '{ print $2}' | sort -u
 
-fd -E "\.*" | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/"
+#$fd -E "\.*" | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/"
 
+path="/Volumes/Dev/imdb/imdb_dataset_files/name_basics"
+ln -s $path name_basics
+# export $name_basics
+# title_akas="${path}title.akas.csv"
+# export $title_akas
+# title_basics="${path}title.basics.csv"
+# export $title_basics
+# title_crew="${path}title.crew.csv"
+# export $title_crew
+# title_episode="${path}title.episode.csv"
+# export $title_episode
+# title_principals="${path}title.principals.csv"
+# export $title_principals
+# title_ratings="${path}title.ratings.csv"
+# export $title_ratings
