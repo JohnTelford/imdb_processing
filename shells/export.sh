@@ -19,7 +19,7 @@ for file_name in name.basics title.akas title.basics title.episode title.princip
         echo $file_name
         if  test -f $file_name; then
             echo "$file_name exists"
-            /bin/rm -f $file_name
+            rm  $file_name
         else
             echo "$file_name does not exist"
             ln -s ${path}/${file_name_csv} $file_name
