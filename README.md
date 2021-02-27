@@ -16,6 +16,7 @@ toc:
 - [x]   References
 - [ ]   User interface
 - [x]   Title case `actor_name`
+- [ ]   Iterative Refactor
 - [x]   Export links to IMDb datasets as environmental variables
 - [x]   Create cache directory for each IMDb dataset
   - [x] name_basics directory
@@ -108,101 +109,65 @@ The query `rg 'nm0161451' name.basics.csv` returns the record `nm0161451,Marguer
 ##  dev Directory Structure
 
 ```shell
- |-prams_found
- |-datasets_summary.txt
- |-xsh_help.txt
- |-xsv_actor_nconst.sh
- |-IMDb_Datasets.png
- |-rg --help.txt
- |-.DS_Store
- |-imdb_proessingQ.sh
- |-imdb_doc
- | |-.DS_Store
- | |-IMDb Dataset
- | |-imdb_cache
- | | |-.DS_Store
- | | |-imdb_erd.png
- | | |-IMDb.md
- | | |-xsv_commands_help.md
- |-imdb_scripts
- | |-name.csv
- | |-addresses.csv
- | |-nameBasics_tmp_cache.csv
- | |-awk_one_liners.awk
- | |-title.basics_awk_cache_csv.awk
- | |-title.basics_cache.csv
- | |-.DS_Store
- | |-cache_name_basics
- | |-salesinfo.txt
- | |-name.basics_Profession.txt
- | |-imdb_name.basics.sh
- | |-install_imdb_files.sh
- | |-imdb_dataset_cache
- | | |-.DS_Store
- | | |-title_principals
- | | | |-headers_title.principals.csv
- | | |-title_basics
- | | |-name_basics
- | | | |-nconst_John_Wayne_name.basics
- | | | |-csv_John_Wayne_name.basics
- | | | |-headers_name.basics.csv
- | |-title.basics_awk_cache_csv
- | |-fnconst
- | |-csv_cache_awk
- | |-name.basics_director.txt
- | |-shell_testing.sh
- | |-customer.csv
- | |-title.principals_shell.sh
- | |-output
- | |-students.txt
- | |-file_name
- | |-title.basics_shell.sh
- | |-tconst
- | |-cvs_John_Wayne_name.basics
- | |-attributes
- | | |-genres_title.basics.txt
- | | |-title_type_title.basics.txt
- | | |-primary_profession.name.basics.txt
- | |-ls_out
- | |-cache_nameBasics.csv
- | |-nconst
- | |-cache_name_basics.csv
- | |-imdb_cache_stack.sh
- | |-nc
- | |-imdb_title.principals.sh
- | |-imdb_dataset_processing.sh
- | |-name.basice_awk_csv.awk
- | |-hello
- | |-name.basics_shell.sh
- | |-nconst_cache
- | |-title.principals_cache.csv
- | |-test_head.csv
- | |-gawk_test.sh
- |-markdown
- |-xsv_help.sh
- |-xsv_actor
- |-select.sh
- |-name.basics_shell.shQ
- |-xsv_commands.txt
- |-README.md
- |-search_count
- |-datasets_summary.sh
- |-xsv_actor_tconst.sh
- |-xsv_working_examples.txt
- |-functions
- | |-name_basics_param.sh
- | |-title_basics_primary_title.sh
- | |-title_principales_tconst.sh
- |-mermaid
- | |-graph.md
- |-xsv_command
- |-.vscode
- | |-settings.json
- |-assets
- | |-.DS_Store
- |-imdb_dataset_files_timing.sh
- |-imdb_processing.code-workspace
- |-imdb_processing_QQ.sh
+├── README.md
+├── bone_yard
+│   ├── csv_cache_awk
+│   ├── datasets_summary.txt
+│   ├── functions
+│   │   ├── name_basics_param.sh
+│   │   ├── title_basics_primary_title.sh
+│   │   └── title_principales_tconst.sh
+│   └── imdb_cache
+│       ├── IMDb.md
+│       ├── imdb_erd.png
+│       └── xsv_commands_help.md
+├── imdb_processing.code-workspace
+├── imdb_scripts
+│   ├── assets
+│   │   └── imdb_erd.png
+│   ├── attributes
+│   └── markdown
+│       ├── Markdown\ Cheat\ Sheet
+│       ├── test.md
+│       └── useful\ commands.md
+├── mermaid
+│   └── graph.md
+├── name_basics -> /Volumes/Dev/imdb/imdb_dataset_files/name.basics.csv
+├── prams_found
+├── prod
+│   ├── genres_title.basics.txt
+│   ├── imdb_dataset_cache
+│   │   ├── name_basics
+│   │   │   ├── csv_John_Wayne_name.basics
+│   │   │   ├── headers_name.basics.csv
+│   │   │   └── nconst_John_Wayne_name.basics
+│   │   ├── title_basics
+│   │   └── title_principals
+│   │       └── headers_title.principals.csv
+│   ├── imdb_dataset_processing.sh
+│   ├── install_imdb_files.sh
+│   ├── primary_profession.name.basics.txt
+│   └── primary_provession.txt
+├── search_count
+├── test
+│   ├── test_1
+│   └── test_2
+├── title_akas -> /Volumes/Dev/imdb/imdb_dataset_files/title.akas.csv
+├── title_basics -> /Volumes/Dev/imdb/imdb_dataset_files/title.basics.csv
+├── title_crew -> /Volumes/Dev/imdb/imdb_dataset_files/title.crew.csv
+├── title_episode -> /Volumes/Dev/imdb/imdb_dataset_files/title.episode.csv
+├── title_principals -> /Volumes/Dev/imdb/imdb_dataset_files/title.principals.csv
+├── title_ratings -> /Volumes/Dev/imdb/imdb_dataset_files/title.ratings.csv
+├── xsh_help.txt
+├── xsv_actor
+├── xsv_actor_nconst.sh
+├── xsv_actor_tconst.sh
+├── xsv_command
+├── xsv_commands.txt
+├── xsv_help.sh
+├── xsv_working_examples.txt
+└── zshrc -> /Users/johntelford/.zshrc
+```
 
   
   
