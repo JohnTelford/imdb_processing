@@ -62,8 +62,8 @@ while [ ! -z "$1" ]; do
 
             printf "\n==========="
             printf "\n%s\n\n" "list genres"
-            cat attributes/genres_title.basics.txt
-
+            cat ./genres_title.basics.txt
+            exit 0
         ;;
     -pn | --primary_name)
         shift
@@ -91,8 +91,8 @@ while [ ! -z "$1" ]; do
 
             printf "\n======================="
             printf "\n%s\n\n" "list primary_profession"
-            cat attributes/primary_profession.name.basics.txt
-            echo ""
+            cat ./primary_profession.name.basics.txt
+            exit 0
 
         ;;
     -tt | --title_type)
@@ -100,7 +100,7 @@ while [ ! -z "$1" ]; do
         title_type=$1
             echo $title_type
 
-            if  rg "${title_type}" attributes/title_type_title.basics.txt  ; then
+            if  rg "${title_type}" ./title_type_title.basics.txt  ; then
                 echo "${title_type} is a title_type"
             else
                 echo "${title_type} is NOT a title_type"
@@ -114,8 +114,8 @@ while [ ! -z "$1" ]; do
 
             printf "\n==============="
             printf "\n%s\n\n" "list title_type"
-            cat attributes/title_type_title.basics.txt
-
+            cat ./title_type_title.basics.txt
+            exit 0
         ;;
     *)
         echo "parameter error"

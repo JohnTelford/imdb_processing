@@ -1,0 +1,1 @@
+/Users/johntelford/.zshrc
