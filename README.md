@@ -16,7 +16,7 @@ toc:
 - [x]   References
 - [ ]   User interface
 - [x]   Title case `actor_name`
-- [ ]   Iterative Refactor
+- [ ]   Iterative Refactoring
 - [x]   Export links to IMDb datasets as environmental variables
 - [x]   Create cache directory for each IMDb dataset
   - [x] name_basics directory
@@ -61,6 +61,7 @@ An example of use is `rg "John Wayne" name_basics`
 
 ```bash
 # add exports to .zshrc
+
 ln -s /Volumes/Dev/imdb/imdb_dataset_files/name.basics.csv name_basics
 export $name_basics
 
@@ -83,7 +84,7 @@ export title_ratings
 ##  Dataset Keys
 
   
-`nconst` is the *name* constant and the first attribute of the `name.basics` dataset. It is used  forra querying the `title.principales` dataset.
+`nconst` is the *name* constant and the first attribute of the `name.basics` dataset. It is used  for querying the `title.principales` dataset.
 
 `nconst` points to `tconst` constants in the `title.principales` dataset.  They are used to query other IMDb datasets as shown in the diagram above.
   
@@ -93,13 +94,19 @@ export title_ratings
   
 The `rg` [ripgrep](https://crates.io/crates/ripgrep ) command line search utility tool   recursively searches dictories using a  `regex` pattern.
   
-The query `rg ',John Wayne,\d+,' name.basics.csv | rg 'actor'` produces the record `nm0000078,John Wayne,1907,1979,actor,producer,soundtrack,tt0031971,tt0065126,tt0056217,tt0053580`. This record is saved as a cache file as `imdb_dataset_cache/name_basics/csv_John_Wayne_name.basics`
+The query: `rg ',John Wayne,\d+,' name.basics.csv | rg 'actor'` 
+Produces the record: `nm0000078,John Wayne,1907,1979,actor,producer,soundtrack,tt0031971,tt0065126,tt0056217,tt0053580`. This record is saved as a cache file as `imdb_dataset_cache/name_basics/csv_John_Wayne_name.basics`
   
 The` \d+,` after `,John Wayne,` in the query regex further qualifies the query so the `primaryName` field is followed immediately by a the `birthYear` field containing digits.
   
-The first field from the `name.basics.csv` dataset query is used to query the `title.principals.csv` dataset. The query `rg 'nm0000078,actor,' title.principals.csv` produces a list of `tconst` value and `character` played by the actor. The first record returned from this query is `tt0020691,1,nm0000078,actor,\N,"[""Breck Coleman""]"`,  Each `tconst` value returned  is used to query other IMDb datasets.
+The first field from the `name.basics.csv` dataset query is used to query the `title.principals.csv` dataset. 
+The query `rg 'nm0000078,actor,' title.principals.csv` 
+Produces a list of `tconst` value and `character` played by the actor. 
+The first record returned from this query is `tt0020691,1,nm0000078,actor,\N,"[""Breck Coleman""]"`,  Each `tconst` value returned  is used to query other IMDb datasets.
   
-The record returned by the query `rg 'tt0020691' title.basics.csv` is `tt0020691,movie,The Big Trail,The Big Trail,0,1930,\N,125,Adventure,Romance,Western`
+The record returned by the query 
+`rg 'tt0020691' title.basics.csv` is
+`tt0020691,movie,The Big Trail,The Big Trail,0,1930,\N,125,Adventure,Romance,Western`
   
 The query `rg 'tt0020691` title.principals.csv returns up to 10 records containing the character names of played by other actor and actress, and writers, directors, and other jobs. The record for character *Ruth Cameron* is `tt0020691,2,nm0161451,actress,\N,"[""Ruth Cameron""]"`
   
@@ -108,65 +115,10 @@ The query `rg 'nm0161451' name.basics.csv` returns the record `nm0161451,Marguer
   
 ##  dev Directory Structure
 
-```shell
-├── README.md
-├── bone_yard
-│   ├── csv_cache_awk
-│   ├── datasets_summary.txt
-│   ├── functions
-│   │   ├── name_basics_param.sh
-│   │   ├── title_basics_primary_title.sh
-│   │   └── title_principales_tconst.sh
-│   └── imdb_cache
-│       ├── IMDb.md
-│       ├── imdb_erd.png
-│       └── xsv_commands_help.md
-├── imdb_processing.code-workspace
-├── imdb_scripts
-│   ├── assets
-│   │   └── imdb_erd.png
-│   ├── attributes
-│   └── markdown
-│       ├── Markdown\ Cheat\ Sheet
-│       ├── test.md
-│       └── useful\ commands.md
-├── mermaid
-│   └── graph.md
-├── name_basics -> /Volumes/Dev/imdb/imdb_dataset_files/name.basics.csv
-├── prams_found
-├── prod
-│   ├── genres_title.basics.txt
-│   ├── imdb_dataset_cache
-│   │   ├── name_basics
-│   │   │   ├── csv_John_Wayne_name.basics
-│   │   │   ├── headers_name.basics.csv
-│   │   │   └── nconst_John_Wayne_name.basics
-│   │   ├── title_basics
-│   │   └── title_principals
-│   │       └── headers_title.principals.csv
-│   ├── imdb_dataset_processing.sh
-│   ├── install_imdb_files.sh
-│   ├── primary_profession.name.basics.txt
-│   └── primary_provession.txt
-├── search_count
-├── test
-│   ├── test_1
-│   └── test_2
-├── title_akas -> /Volumes/Dev/imdb/imdb_dataset_files/title.akas.csv
-├── title_basics -> /Volumes/Dev/imdb/imdb_dataset_files/title.basics.csv
-├── title_crew -> /Volumes/Dev/imdb/imdb_dataset_files/title.crew.csv
-├── title_episode -> /Volumes/Dev/imdb/imdb_dataset_files/title.episode.csv
-├── title_principals -> /Volumes/Dev/imdb/imdb_dataset_files/title.principals.csv
-├── title_ratings -> /Volumes/Dev/imdb/imdb_dataset_files/title.ratings.csv
-├── xsh_help.txt
-├── xsv_actor
-├── xsv_actor_nconst.sh
-├── xsv_actor_tconst.sh
-├── xsv_command
-├── xsv_commands.txt
-├── xsv_help.sh
-├── xsv_working_examples.txt
-└── zshrc -> /Users/johntelford/.zshrc
+@import "block_start.md"
+@import "dirtree.md"
+@import "block_end.md"
+
 ```
 
   
