@@ -17,7 +17,7 @@ toc:
 - [ ]   User interface
 - [x]   Title case `actor_name`
 - [ ]   Iterative Refactoring
-- [x]   Export links to IMDb datasets as environmental variables
+- [x]   Create function `define_files.sh`. Scripts execute `source functions/define_files.sh` to create local IMDb datasets `ln -s`
 - [x]   Create cache directory for each IMDb dataset
   - [x] name_basics directory
 *NOTE - check if  `query_results.csv` exists*  
@@ -55,30 +55,32 @@ Example query results - `John_Wayne_1907_actor`
   
 ## Links to IMDb Datasets Exports
 
-Links to IMDb datasets are exported as environmental variables so shell scripts can easily access them. 
+Create `ln-s` for each IMDb dataset to be used in shell scripts
+`ln -s of IMDb datasets`
+Invoke - `source functions/define_files.sh`
 
-An example of use is `rg "John Wayne" name_basics`
+
+An example of use is `rg "John Wayne" NAME_BASICS`
 
 ```bash
-# add exports to .zshrc
+# Create ln-s for each IMDb dataset
 
-ln -s /Volumes/Dev/imdb/imdb_dataset_files/name.basics.csv name_basics
-export $name_basics
-
-ln -s /Volumes/Dev/imdb/imdb_dataset_files/title.akas.csv title_akas
-export $title_akas
-
-ln -s /Volumes/Dev/imdb/imdb_dataset_files/title.crew.csv title_crew
-export $title_crew
-
-ln -s /Volumes/Dev/imdb/imdb_dataset_files/title.episode.csv title_episode
-export $title_episodes
-
-ln -s /Volumes/Dev/imdb/imdb_dataset_files/title.principals.csv title_principals
-export title_principals
-
-ln -s /Volumes/Dev/imdb/imdb_dataset_files/title.ratings.csv title_ratings
-export title_ratings
+for file_name in name.basics title.akas title.basics title.episode title.principals title.ratings title.crew
+    do
+        FILE_NAME=$file_name
+        # Replace . in filename with_
+        FILE_NAME=$(gsed -e "s/\./\_/g" <<< $FILE_NAME)
+    
+        # Upper case
+        FILE_NAME=$(gsed 's/.*/\U&/' <<< $FILE_NAME)
+            echo "$FILE_NAME"
+        
+        # Create links
+        if [ ! -f  $FILE_NAME ] ; then
+            echo "ln -s ${file_name}.csv $FILE_NAME - link created"
+            ln -s /Volumes/Dev/imdb/imdb_dataset_files/"${file_name}.csv" $FILE_NAME
+        fi
+    done
 ```
 
 ##  Dataset Keys
