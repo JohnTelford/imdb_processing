@@ -5,7 +5,7 @@ cd "$DIRNAME" || exit
 echo "imdb_dataset_processing"
 
 # ln -s of IMDb datasets
-source functions/define_files.sh
+source functions/link_files.sh
 
 # command line parameters
 function help() {

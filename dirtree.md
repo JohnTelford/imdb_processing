@@ -1,5 +1,13 @@
 .
+├── NAME_BASICS -> /Volumes/Dev/imdb/imdb_dataset_files/name.basics.csv
 ├── README.md
+├── TITLE_AKAS -> /Volumes/Dev/imdb/imdb_dataset_files/title.akas.csv
+├── TITLE_BASICS -> /Volumes/Dev/imdb/imdb_dataset_files/title.basics.csv
+├── TITLE_CREW -> /Volumes/Dev/imdb/imdb_dataset_files/title.crew.csv
+├── TITLE_EPISODE -> /Volumes/Dev/imdb/imdb_dataset_files/title.episode.csv
+├── TITLE_PRINCIPALS -> /Volumes/Dev/imdb/imdb_dataset_files/title.principals.csv
+├── TITLE_RATINGS -> /Volumes/Dev/imdb/imdb_dataset_files/title.ratings.csv
+├── attributes_list.sh
 ├── block_end.md
 ├── block_start.md
 ├── bone_yard
@@ -14,6 +22,18 @@
 │       ├── imdb_erd.png
 │       └── xsv_commands_help.md
 ├── dirtree.md
+├── functions
+│   └── define_files.sh
+├── headers.sh
+├── imdb_dataset_cache
+│   ├── name_basics
+│   │   ├── csv_John_Wayne_name.basics
+│   │   ├── headers_name.basics.csv
+│   │   └── nconst_John_Wayne_name.basics
+│   ├── primary_provession.txt
+│   ├── title_basics
+│   └── title_principals
+├── imdb_dataset_processing.sh
 ├── imdb_processing.code-workspace
 ├── imdb_scripts
 │   ├── assets
@@ -23,33 +43,26 @@
 │       ├── Markdown\ Cheat\ Sheet
 │       ├── test.md
 │       └── useful\ commands.md
+├── install_imdb_files.sh
 ├── mermaid
 │   └── graph.md
-├── name_basics -> /Volumes/Dev/imdb/imdb_dataset_files/name.basics.csv
 ├── prod
-│   ├── genres_title.basics.txt
-│   ├── imdb_dataset_cache
-│   │   ├── name_basics
-│   │   │   ├── csv_John_Wayne_name.basics
-│   │   │   ├── headers_name.basics.csv
-│   │   │   └── nconst_John_Wayne_name.basics
-│   │   ├── title_basics
-│   │   └── title_principals
-│   │       └── headers_title.principals.csv
-│   ├── imdb_dataset_processing.sh
-│   ├── install_imdb_files.sh
-│   ├── primary_profession.name.basics.txt
-│   ├── primary_provession.txt
-│   └── title_type_title.basics.txt
-├── test
-│   ├── test_1
-│   └── test_2
-├── title_akas -> /Volumes/Dev/imdb/imdb_dataset_files/title.akas.csv
-├── title_basics -> /Volumes/Dev/imdb/imdb_dataset_files/title.basics.csv
-├── title_crew -> /Volumes/Dev/imdb/imdb_dataset_files/title.crew.csv
-├── title_episode -> /Volumes/Dev/imdb/imdb_dataset_files/title.episode.csv
-├── title_principals -> /Volumes/Dev/imdb/imdb_dataset_files/title.principals.csv
-├── title_ratings -> /Volumes/Dev/imdb/imdb_dataset_files/title.ratings.csv
+│   ├── attributes
+│   │   ├── genres_title.basics.txt
+│   │   ├── headers
+│   │   │   ├── name_basics_header
+│   │   │   ├── title_akas_header
+│   │   │   ├── title_basics_header
+│   │   │   ├── title_crew_header
+│   │   │   ├── title_episode_header
+│   │   │   ├── title_episodes_header
+│   │   │   ├── title_principals_header
+│   │   │   └── title_ratings_header
+│   │   ├── headers_title.principals.csv
+│   │   └── primary_profession.name.basics.txt
+│   └── imdb_shells
+│       └── attributesprinary_title
+├── unset.sh
 ├── xsh_help.txt
 ├── xsv_actor
 ├── xsv_actor_nconst.sh

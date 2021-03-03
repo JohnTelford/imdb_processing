@@ -14,7 +14,6 @@ for file_name in name.basics title.akas title.basics title.episode title.princip
     
         # Upper case
         FILE_NAME=$(gsed 's/.*/\U&/' <<< $FILE_NAME)
-            echo "$FILE_NAME"
         
         # Create links
         if [ ! -f  $FILE_NAME ] ; then

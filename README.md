@@ -17,7 +17,7 @@ toc:
 - [ ]   User interface
 - [x]   Title case `actor_name`
 - [ ]   Iterative Refactoring
-- [x]   Create function `define_files.sh`. Scripts execute `source functions/define_files.sh` to create local IMDb datasets `ln -s`
+- [x]   Create function `link_files.sh`. Scripts execute `source functions/link_files.sh` to create local IMDb datasets `ln -s`
 - [x]   Create cache directory for each IMDb dataset
   - [x] name_basics directory
 *NOTE - check if  `query_results.csv` exists*  
@@ -57,7 +57,7 @@ Example query results - `John_Wayne_1907_actor`
 
 Create `ln-s` for each IMDb dataset to be used in shell scripts
 `ln -s of IMDb datasets`
-Invoke - `source functions/define_files.sh`
+Invoke - `source functions/link_files.sh`
 
 
 An example of use is `rg "John Wayne" NAME_BASICS`
@@ -116,7 +116,7 @@ The query `rg 'nm0161451' name.basics.csv` returns the record `nm0161451,Marguer
   
   
 ##  dev Directory Structure
-
+# FIXME
 @import "block_start.md"
 @import "dirtree.md"
 @import "block_end.md"
