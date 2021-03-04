@@ -43,24 +43,19 @@ Example query results - `John_Wayne_1907_actor`
   
   
 **NOTE** *"Subsets of IMDb data are available for access to customers for personal and non-commercial use. You can hold local copies of this data, and it is subject to our terms and conditions. Please refer to the Non-Commercial Licensing and copyright/license and verify compliance."* [IMDb Datasets](https://www.imdb.com/interfaces/ ) []
-  | Dataset | Contents |
-  | :--------- | :---------- |
-|  `name.basics.tsv.gz`|    information for names |
-|  `title.akas.tsv.gz` |   localized title information |
-|  `title.basics.tsv.gz` |   information about titles |
-|  `title.crew.tsv.gz`|    director and writer information  |
-|  `title.episode.tsv.gz ` |    tv episode information |
-|  `title.principals.tsv.gz` |    principal cast / crew for titles |
-|  `title.ratings.tsv.gz`|    IMDb rating and votes information for titles
+  | Dataset | `ln -s` | IMDb Dataset|
+  | :--------- | :---------- | ---------- |
+|  `name.basics.tsv.gz`|  NAME_BASICS |  information for names |
+|  `title.akas.tsv.gz` |  TITLE_AKAS | localized title information |
+|  `title.basics.tsv.gz` |  TITLE_BASICS | information about titles |
+|  `title.crew.tsv.gz`|  TITLE_CREW |  director and writer information  |
+|  `title.episode.tsv.gz ` | TITLE_EPISODES  | tv episode information |
+|  `title.principals.tsv.gz` | TITLE_PRINCIPALS  | principal cast / crew for titles |
+|  `title.ratings.tsv.gz`|  TITLE_RATINGS |  IMDb rating and votes |
   
 ## Links to IMDb Datasets Exports
 
 Create `ln-s` for each IMDb dataset to be used in shell scripts
-`ln -s of IMDb datasets`
-Invoke - `source functions/link_files.sh`
-
-
-An example of use is `rg "John Wayne" NAME_BASICS`
 
 ```bash
 # Create ln-s for each IMDb dataset
@@ -82,6 +77,15 @@ for file_name in name.basics title.akas title.basics title.episode title.princip
         fi
     done
 ```
+
+
+Invoke by including `source functions/link_files.sh` in shell scripts
+
+Invoke `rmlink.sh` to remove the links
+
+
+An example of use is `rg "John Wayne" NAME_BASICS`
+
 
 ##  Dataset Keys
 
