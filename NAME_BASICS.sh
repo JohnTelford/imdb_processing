@@ -42,9 +42,10 @@ rg ${nconst} NAME_BASICS | \
 # parse knownForTitles "tt*"
 gawk -F, '{ 
     field = NF
-    for ( c = field; c >= 1 ; c--) {
-       if ($c ~ /^tt/)  print $c 
+    for ( f = field; f >= 1 ; f--) {
+       if ($f ~ /^tt/)  print $f 
     }
-}' tt
- rg -f tt TITLE_BASICS
+}' > tt.csv
+ rg -f tt.csv TITLE_BASICS | gawk -F, '{ printf "%s,%s,%s,%s,%s\n", $1,$2, $3, $6, $9}' | xsv table
+
 
