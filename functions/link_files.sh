@@ -10,7 +10,7 @@ for file_name in name.basics title.akas title.basics title.episode title.princip
     do
         FILE_NAME=$file_name
         # Replace . in filename with_
-        FILE_NAME=$(gsed -e "s/\./\_/g" <<< $FILE_NAME)
+        FILE_NAME=$(gsed 's/\./\_/g' <<< $FILE_NAME)
     
         # Upper case
         FILE_NAME=$(gsed 's/.*/\U&/' <<< $FILE_NAME)
@@ -18,6 +18,7 @@ for file_name in name.basics title.akas title.basics title.episode title.princip
         # Create links
         if [ ! -f  $FILE_NAME ] ; then
             echo "ln -s ${file_name}.csv $FILE_NAME - link created"
-            ln -s /Volumes/Dev/imdb/imdb_dataset_files/"${file_name}.csv" $FILE_NAME
+            source_csv="$file_name.csv"
+            ln -s /Volumes/Dev/imdb/imdb_dataset_files/${source_csv} $FILE_NAME
         fi
     done

@@ -6,15 +6,14 @@ echo "NAME_BASICS.sh"
 
 # ln -s of IMDb datasets
 source functions/link_files.sh
+source functions/arguments.sh
 
 # command line parameters
 function help() {
     cat <<EOF
     NAME_BASICS.sh parameters
-
     ===========
     name.basics
-
     -h   | --help
     -pn  | --primary_name  [example: "first_name last_name"]
     -pp  | --primary_profession
@@ -50,6 +49,4 @@ gawk -F, '{
 
  rg -f tt.csv TITLE_PRINCIPALS | sed 's/\[// ; s/\]// ; s/\\N// ; s/\\N$//'
  #gawk -F, '{ gsub (/"\"["/, "" ,$6) }' #(printf "%s,%s,%s,%s\n",   $2, $3, $4, $6}' | xsv table
-
-
 

@@ -14,6 +14,7 @@ for file_name in name.basics title.akas title.basics title.episode title.princip
         FILE_NAME=$(gsed 's/.*/\U&/' <<< $FILE_NAME)
         
         # Unlink
+        echo "$FILE_NAME"
         if [ -f  $FILE_NAME ] ; then
                 /bin/rm -f $FILE_NAME
                 echo "Removed $FILE_NAME link"
