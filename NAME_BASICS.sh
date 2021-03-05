@@ -46,6 +46,10 @@ gawk -F, '{
        if ($f ~ /^tt/)  print $f 
     }
 }' > tt.csv
- rg -f tt.csv TITLE_BASICS | gawk -F, '{ printf "%s,%s,%s,%s,%s\n", $1,$2, $3, $6, $9}' | xsv table
+  rg -f tt.csv TITLE_BASICS | gawk -F, '{ printf "%s,%s,%s,%s,%s\n", $1,$2, $3, $6, $9}' | xsv table
+
+ rg -f tt.csv TITLE_PRINCIPALS | sed 's/\[// ; s/\]// ; s/\\N// ; s/\\N$//'
+ #gawk -F, '{ gsub (/"\"["/, "" ,$6) }' #(printf "%s,%s,%s,%s\n",   $2, $3, $4, $6}' | xsv table
+
 
 
