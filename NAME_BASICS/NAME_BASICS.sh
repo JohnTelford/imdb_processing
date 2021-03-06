@@ -2,19 +2,18 @@
 DIRNAME=$(dirname "$0")
 cd "$DIRNAME" || exit
 
-echo "imdb_dataset_processing"
+echo "NAME_BASICS.sh"
 
 # ln -s of IMDb datasets
-source functions/link_files.sh
+source ../functions/link_files.sh
+source ../functions/arguments.sh
 
 # command line parameters
 function help() {
     cat <<EOF
-    imdb_dataset_processing.sh parameters
-
+    NAME_BASICS.sh parameters
     ===========
     name.basics
-
     -h   | --help
     -pn  | --primary_name  [example: "first_name last_name"]
     -pp  | --primary_profession
@@ -31,9 +30,6 @@ function help() {
     -ltt | --title_type_list
 EOF
 }
-
-
-#show_usage
 
 # named arguments
 #echo "named arguments"
@@ -136,29 +132,49 @@ done
 # ./imdb_dataset_cache/name_basics
 
 # replace space with _
-primary_name=$(sed 's/ /_/' <<< $primary_name)
+# primary_name=$(sed 's/ /_/' <<< $primary_name)
 
-# .csv file
-pn_csv=./imdb_dataset_cache/name_basics/csv_${primary_name}_name.basics
-echo $pn_csv
-# FIXME
-if  [ -s $pn_csv ]; then
-    echo "${pn_csv} exists and not empty"
-else
-     echo "${pn_csv} doesn't exist or is empty"
-fi
+# # .csv file
+# pn_csv=./imdb_dataset_cache/name_basics/csv_${primary_name}_name.basics
+# echo $pn_csv
+# # FIXME
+# if  [ -s $pn_csv ]; then
+#     echo "${pn_csv} exists and not empty"
+# else
+#      echo "${pn_csv} doesn't exist or is empty"
+# fi
 
-#cat ${pn_csv}
+# #cat ${pn_csv}
 
-# nconst
-pn_nconst=./imdb_dataset_cache/name_basics/nconst_${primary_name}_name.basics
-FILE=$pn_nconst
-if [ -s ${pn_nconst} ]; then
-    echo "${pn_nconst} exists and not empty"
-else
-     echo "${pn_nconst} doesn't exist or is empty"
-fi
+# # nconst
+# pn_nconst=./imdb_dataset_cache/name_basics/nconst_${primary_name}_name.basics
+# FILE=$pn_nconst
+# if [ -s ${pn_nconst} ]; then
+#     echo "${pn_nconst} exists and not empty"
+# else
+#      echo "${pn_nconst} doesn't exist or is empty"
+# fi
 
-rg "John Wayne,1907" $name_basics | gawk -F, '$0 ~ /actor/ ' 
+rg "John Wayne,1907" $NAME_BASICS | gawk -F, '$0 ~ /actor/ ' 
 
-exit 1
+# exit 1
+
+
+# #show_usage
+
+#echo "named arguments"
+# nconst="nm0179163"
+
+# rg ${nconst} NAME_BASICS | \
+# # parse knownForTitles "tt*"
+# gawk -F, '{ 
+#     field = NF
+#     for ( f = field; f >= 1 ; f--) {
+#        if ($f ~ /^tt/)  print $f 
+#     }
+# }' > tt.csv
+#   rg -f tt.csv TITLE_BASICS | gawk -F, '{ printf "%s,%s,%s,%s,%s\n", $1,$2, $3, $6, $9}' | xsv table
+
+#  rg -f tt.csv TITLE_PRINCIPALS | sed 's/\[// ; s/\]// ; s/\\N// ; s/\\N$//'
+ #gawk -F, '{ gsub (/"\"["/, "" ,$6) }' #(printf "%s,%s,%s,%s\n",   $2, $3, $4, $6}' | xsv table
+
