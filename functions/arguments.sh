@@ -2,6 +2,7 @@
 DIRNAME=$(dirname "$0")
 cd "$DIRNAME" || exit
 
+ #!/usr/bin/env bash
 echo "command line arguments"
 
 # command line parameters
