@@ -22,7 +22,7 @@ TPRINCIPALS="/Volumes/Dev/imdb/imdb_dataset_files/title.principals.csv"
 #        file[1]="/Volumes/Dev/imdb/imdb_dataset_files/${source_csv}"
 
 # done
-`        # # Replace . in filename with_
+        # # Replace . in filename with_
         # FILE_NAME=$(gsed 's/\./\-/g' <<< $FILE_NAME)
         #         echo "${FILE_NAME}"
 

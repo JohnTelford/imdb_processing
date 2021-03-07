@@ -41,7 +41,7 @@ source ../functions/arguments.sh
 # fi
 
 #NBASICS="/Volumes/Dev/imdb/imdb_dataset_files/name.basics.csv"
-head $NBASICS
+#head $NBASICS
 rg "John Wayne,1907" $NBASICS | gawk -F, '$0 ~ /actor/ ' 
 
 # exit 1
@@ -50,7 +50,7 @@ rg "John Wayne,1907" $NBASICS | gawk -F, '$0 ~ /actor/ '
 # #show_usage
 
 #echo "named arguments"
-nconst="nm0179163"
+nconst="nm0000078"
 
 rg ${nconst} $NBASICS | \
 # parse knownForTitles "tt*"
@@ -59,10 +59,10 @@ gawk -F, '{
     for ( f = field; f >= 1 ; f--) {
        if ($f ~ /^tt/)  print $f 
     }
-
-
 }' > tt.csv
+
+rg -f tt.csv 
   rg -f tt.csv $TBASICS | gawk -F, '{ printf "%s,%s,%s,%s,%s\n",  $1,$2, $3, $6, $9}' | xsv table
 
  rg -f tt.csv $TPRINCIPALS | sed 's/\[// ; s/\]// ; s/\\N// ; s/\\N$//' |
- gawk -F, '{ gsub (/\["/, "" ,$6) } {printf "%s,%s,%s,%s\n",  $2, $3, $4, $6}' | xsv table
+    gawk -F, '{ gsub (/\["/, "" ,$6) } {printf "%s,%s,%s,%s\n",  $2, $3, $4, $6}' | xsv table
