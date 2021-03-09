@@ -5,8 +5,13 @@
 # Invoke - `source functions/define_files.sh`
 
 NBASICS="/Volumes/Dev/imdb/imdb_dataset_files/name.basics.csv"
+TAKAS="/Volumes/Dev/imdb/imdb_dataset_files/title.akas.csv"
 TBASICS="/Volumes/Dev/imdb/imdb_dataset_files/title.basics.csv"
+TCREW="/Volumes/Dev/imdb/imdb_dataset_files/title.crew.csv"
+TEPISODE="/Volumes/Dev/imdb/imdb_dataset_files/title.episode.csv"
 TPRINCIPALS="/Volumes/Dev/imdb/imdb_dataset_files/title.principals.csv"
+TRATINGS="/Volumes/Dev/imdb/imdb_dataset_files/title.ratings.csv"
+
 
 # `for file_name in name.basics title.akas title.basics title.episode title.principals title.ratings title.crew
 #     do

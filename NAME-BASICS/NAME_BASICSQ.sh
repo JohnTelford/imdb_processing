@@ -2,10 +2,10 @@
 DIRNAME=$(dirname "$0")
 cd "$DIRNAME" || exit
 
-echo "NAME_BASICS.sh"
+echo "NAME_BASICSQ.sh"
 
 # ln -s of IMDb datasets
-source ../functions/data_files.sh
+#source ../functions/data_files.sh
 source ../functions/arguments.sh
 
 #typeset
