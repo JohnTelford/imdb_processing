@@ -8,25 +8,25 @@ echo "command line arguments"
 # command line parameters
 function help() {
     cat <<EOF
-    imdb_dataset_processing.sh parameters
-
+    Parameters
     ===========
-    name.basics
+    NOTE: All parameter values must be enclosed in quotes 
 
-    -h   | --help
-    -pn  | --primary_name  [example: "first_name last_name"]
-    -pp  | --primary_profession
-    -lp  | --primary_profession_list
-    -kft | --known_for_titles
-    -by  | --birthYear
-    -dy  | --deathYear
-    
-    ============
-    title.basics
-    -g   | --genres
-    -lg  | --genres_list
-    -tt  | --title_type
-    -ltt | --title_type_list
+    -c      | --category 
+    -cl     | --category_list
+
+    -g      | --genres
+    -gl     | --genres_list
+
+    -pn     | --primary_name  [example: "first_name last_name"]
+
+    -pp     | --primary_profession
+    -ppl    | --primary_profession_list
+
+    -kft    | --known_for_titles
+
+    -by     | --birthYear
+    -dy     | --deathYear
 EOF
 }
 
@@ -37,35 +37,70 @@ EOF
 #echo "named arguments"
 while [ ! -z "$1" ]; do
     case "$1" in
+
     -by | --birth_year)
         shift
         birth_year=$1
         echo "--birthYear $birth_year"
-        ;;
-    -dy | --death_year)
+    ;;
+
+     -c | --category)
+        shift
+        category=$1
+            echo $category
+            if  rg "${category}" ./lists/category_list.txt  ; then
+                echo "${category} is a category"
+            else
+                echo "${category} is NOT a category"
+                cat <<EOF 
+Use the command line parameter -cl for a list of categories
+EOF
+                exit 1
+            fi
+        echo "--category $category"
+    ;;
+
+    -cl | --category_list)
+        shift
+        printf "\n==============="
+        printf "\n%s\n\n" "list title_type"
+        cat ./lists/category_list.txt
+        exit 0
+    ;;
+
+   -dy | --death_year)
         shift
         death_year=$1
         echo "--deathYear $death_year"
-        ;;
+    ;;
+
     -h | --help)
         shift
             help
         exit
-        ;;
+    ;;
+
     -g | --genres)
         shift
         genres=$1
-        #  FIXME check against list
-        echo "--genera $genres"
-        ;;
-    -lg | --genres_list)
+            if  rg "${genres}" ./lists/genres_list.txt  ; then
+                echo "${genres} is a genres"
+            else
+                echo "genera  ( ${genres} )   is NOT a valid genres"
+                cat <<EOF 
+Use the command line parameter -gl for a list of genres
+EOF
+                exit 1
+            fi
+    ;;
+    -gl | --genres_list)
         shift
-
-            printf "\n==========="
-            printf "\n%s\n\n" "list genres"
-            cat ./genres_title.basics.txt
-            exit 0
+        printf "\n==========="
+        printf "\n%s\n\n" "list genres"
+        cat ./lists/genres_list.txt
+        exit 0
         ;;
+
     -pn | --primary_name)
         shift
         primary_name=$1
@@ -75,49 +110,30 @@ while [ ! -z "$1" ]; do
 
         echo "--primary_name $primary_name"
         ;;
+
     -pp | --primary_profession)
         shift
         primary_profession=$1
 
-            if  rg "${primary_profession}" attributes/primary_profession.name.basics.txt  ; then
+            if  rg "${primary_profession}" ./lists/primary_profession_list.txt  ; then
                 echo "${primary_profession} is a primary_profession"
             else
-                echo "${primary_profession} is NOT a primary_profession"
+                echo "primary_profession ( ${primary_profession} ) is NOT a valid primary_profession"
+                cat <<EOF 
+Use the command line parameter -ppl for a list of primary_profession
+EOF
                 exit 1
             fi
-
         ;;
-    -lp | --primary_profession_list)
+
+    -ppl | --primary_profession_list)
         shift
-
-            printf "\n======================="
-            printf "\n%s\n\n" "list primary_profession"
-            cat ./primary_profession.name.basics.txt
-            exit 0
-
+        printf "\n======================="
+        printf "\n%s\n\n" "list primary_profession"
+        cat ./lists/primary_profession_list.txt
+        exit 0
         ;;
-    -tt | --title_type)
-        shift
-        title_type=$1
-            echo $title_type
 
-            if  rg "${title_type}" ./title_type_title.basics.txt  ; then
-                echo "${title_type} is a title_type"
-            else
-                echo "${title_type} is NOT a title_type"
-                exit 1
-            fi
-
-        echo "--title_type $title_type"
-        ;;
-    -ltt | --title_type_list)
-        shift
-
-            printf "\n==============="
-            printf "\n%s\n\n" "list title_type"
-            cat ./title_type_title.basics.txt
-            exit 0
-        ;;
     *)
         echo "parameter error"
             help
