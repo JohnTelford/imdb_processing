@@ -6,4 +6,5 @@ echo "IMDBD.sh"
 
 # IMDb dataset variables
 source functions/data_files.sh
+source functions/arguments.sh
 

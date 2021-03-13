@@ -2,7 +2,7 @@
 DIRNAME=$(dirname "$0")
 cd "$DIRNAME" || exit
 
-echo "NAME-BASICS.sh"
+echo "test.sh"
 
 # ln -s of IMDb datasets
 source functions/data_files.sh

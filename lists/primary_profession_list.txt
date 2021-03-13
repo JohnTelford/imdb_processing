@@ -15,7 +15,7 @@ composer
 costume_department
 costume_designer
 director
-editor
+editor/
 editorial_department
 electrical_department
 executive
