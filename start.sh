@@ -2,16 +2,29 @@
 DIRNAME=$(dirname "$0")
 cd "$DIRNAME" || exit
 
-echo "TEST.sh"
+echo "start.sh"
 
 # ln -s of IMDb datasets
 source functions/data_files.sh
 source functions/arguments.sh
 
-echo "Welcome"
+cat << EOF
+The first steps are:
+
+(1) Choose to view lists of media types:
+(2) The second setp is selecting types of media.
+
+
+EOF
 
 # media type lista
-read -p 'Choose a lists of media types: (1) movie-list, (2) tv-list, (3) other-list: ' media_list
+read -p '(1) Choose to view lists of media types: 
+    (1) movie-list 
+    (2) tv-list
+    (3) other-list
+    (4) next-step
+    (5) quit
+    Enter selection: ' media_list
 #echo "$media_list"
 case $media_list in
 
@@ -33,14 +46,24 @@ case $media_list in
         echo ""      
         ;;
 
+    4 | next-step)
+        echo ""
+        ;;
+
+    5 | quit)
+        echo ""
+        exit 0
+        ;;
+
     *)
         echo "unknown list"
         echo ""
+        exit 1
         ;;
 esac
 
 # media_type
-read -p 'Choose one or more types of media; (1) movies, (2) tv or (3) other: ' media_type
+read -p '(2) Choose one or more types of media; (1) movies, (2) tv or (3) other: ' media_type
 #echo "$media_type"
 case $media_type  in
 
