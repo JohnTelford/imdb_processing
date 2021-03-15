@@ -10,14 +10,12 @@ source functions/arguments.sh
 
 cat << EOF
 The first steps are:
-
-(1) Choose to view lists of media types:
-(2) The second setp is selecting types of media.
-
-
+(0) Overview
+(1) Lists of media types
+(2) Select types of media
 EOF
 
-# media type lista
+# 
 read -p '(1) Choose to view lists of media types: 
     (1) movie-list 
     (2) tv-list
@@ -62,21 +60,30 @@ case $media_list in
         ;;
 esac
 
-# media_type
-read -p '(2) Choose one or more types of media; (1) movies, (2) tv or (3) other: ' media_type
-#echo "$media_type"
+# Select types of media
+read -p '(2) Select media_type; (1) movies, (2) tv or (3) other: ' media_type
+echo "$media_type"
 case $media_type  in
 
-    1 | movie)
+    1 | movies)
         echo "movie media"
+        read -p 'Enter movie_type:' movie_type
+        echo "$movie_type"
+        # TODO eheck
         ;;
 
     2 | tv)
-        echo "movie media"
-        ;;
+        echo "tv media"
+        read -p 'Enter tv_type:' tv_type
+        echo "$tv_type"
+        # TODO eheck
+       ;;
 
     3 | other)
         echo "other media"
+        read -p 'Enter other_type': other_type
+        echo "$other_type"
+        # TODO eheck
         ;;
 
     *)
