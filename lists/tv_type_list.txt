@@ -1,6 +1,8 @@
-tvEpisode
-tvMiniSeries
-tvMovie
-tvSeries
-tvShort
-tvSpecial
+TV Types
+------------
+(1) tvEpisode
+(2) tvMiniSeries
+(3) tvMovie
+(4) tvSeries
+(5) tvShort
+(6) tvSpecial

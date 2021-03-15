@@ -9,10 +9,7 @@ source functions/data_files.sh
 source functions/arguments.sh
 
 cat << EOF
-The first steps are:
-(0) Overview
-(1) Lists of media types
-(2) Select types of media
+Please select a media type
 EOF
 
 # 

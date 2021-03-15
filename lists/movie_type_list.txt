@@ -1,3 +1,5 @@
-movie
-short
-episode
+Movie Types
+---------------
+(1) movie
+(2) short
+(3) episode
