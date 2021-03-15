@@ -11,8 +11,7 @@ IMDb
 EOF
 }
 
-function media_type_lists ()
-{
+function media_type_lists () {
     read -p 'Choose to view lists of media types: 
     (1) movie-type 
     (2) tv-list
