@@ -4,7 +4,15 @@ cd "$DIRNAME" || exit
 
 function intro () {
     cat << EOF
-    The Intro
+    
+Introduction
+------------
+This application works with a subset of IMDb web site data.
+It gathers information and presents it 
+
+The first part is used to select Media Types for Movies, TV, and Others.
+
+The next part is used to select the information about the selected Media Type.
 EOF
 }
 
@@ -50,7 +58,8 @@ case $media_type  in
     1 | movie)
         movie_type="movie"
         echo "$movie_type"
-        # TODO eheck
+        #source source functions/movie_types.sh
+        movie_attr
         exit 0
         ;;
 
@@ -68,7 +77,7 @@ case $media_type  in
         exit 0
         ;;
 
-    x4 | tvEpisode)
+    4 | tvEpisode)
         tvEpisode_type="tvEpisode"
         echo "$tvEpisode_type"
         # TODO eheck
@@ -98,12 +107,12 @@ case $media_type  in
 
     8 | tvSeries)
         tvSeries_type="tvSeries"
-        echo "$xtvSeries_type"
+        echo "$tvSeries_type"
         # TODO eheck
         exit 0
         ;;
 
-    9| tvSpecial)
+    9 | tvSpecial)
         tvSpecial_type="tvSpecial"
         echo "$tvSpecial_type"
         # TODO eheck

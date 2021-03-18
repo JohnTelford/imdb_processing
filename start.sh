@@ -8,5 +8,10 @@ echo "start.sh"
 source functions/data_files.sh
 source functions/arguments.sh
 source functions/media_types.sh
+source functions/movie_attr.sh
 
-media_type_list
+movie_title
+
+movie_actor_actress
+
+movie_category

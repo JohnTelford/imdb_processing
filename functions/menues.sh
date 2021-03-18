@@ -35,7 +35,8 @@ function media_type_lists () {
             Enter selection: ' movie_type
             case $movie_type in
                 1 | movie )
-                    movie_type="movie"
+                    movie_attr
+                    #movie_type="movie"
                 ;;
 
                 2 | short )
@@ -50,7 +51,7 @@ function media_type_lists () {
                     echo "unknown list"
                     echo ""
                     exit 1
-
+                ;;
             esac
             ;;
 
@@ -87,8 +88,3 @@ function media_type_lists () {
     esac
 }
 
-function movie()
-{
-    read -p "Enter movie"
-
-}
